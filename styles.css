@@ -1,0 +1,458 @@
+/* Wedding Invitation - Modern full-screen design */
+
+:root {
+  --rose: #c44569;
+  --rose-deep: #9e2d4d;
+  --gold: #e8b923;
+  --gold-light: #f5d76e;
+  --cream: #fffbf7;
+  --cream-dark: #f8f0e8;
+  --text-dark: #2d1b2e;
+  --teal: #0d9488;
+  --curtain-red: #8B1538;
+  --curtain-red-dark: #6d1029;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background: linear-gradient(160deg, #fff8f5 0%, #fef0eb 35%, #fce8e4 70%, #faf0ed 100%);
+}
+
+/* ========== Curtain overlay ========== */
+.curtain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  cursor: pointer;
+  transition: pointer-events 0.1s step-end 1.2s, visibility 0s linear 1.2s;
+}
+
+.curtain-overlay.curtains-open {
+  pointer-events: none;
+  visibility: hidden;
+  transition: pointer-events 0s, visibility 0s linear 0.6s;
+}
+
+.curtain {
+  flex: 1;
+  position: relative;
+  min-width: 50vw;
+  overflow: hidden;
+  transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+  background: linear-gradient(180deg, var(--curtain-red-dark) 0%, var(--curtain-red) 25%, #9a1840 50%, var(--curtain-red) 75%, var(--curtain-red-dark) 100%);
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 3px), linear-gradient(180deg, var(--curtain-red-dark) 0%, var(--curtain-red) 25%, #9a1840 50%, var(--curtain-red) 75%, var(--curtain-red-dark) 100%);
+  box-shadow: inset -6px 0 24px rgba(0,0,0,0.3);
+}
+
+.curtain::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 14px;
+  background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-light) 70%, transparent);
+  opacity: 0.95;
+}
+
+.curtain::after {
+  content: '';
+  position: absolute;
+  left: -10%; right: -10%; bottom: -8%;
+  height: 22%;
+  background: var(--curtain-red);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+}
+
+.curtain-left { transform-origin: left center; }
+.curtain-right {
+  transform-origin: right center;
+}
+.curtain-right::before {
+  right: 0; left: auto;
+  background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-light) 70%, transparent);
+  transform: scaleX(-1);
+}
+
+.curtain-overlay.curtains-open .curtain-left { transform: translateX(-100%); }
+.curtain-overlay.curtains-open .curtain-right { transform: translateX(100%); }
+
+.curtain-prompt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.curtain-om {
+  font-size: 3rem;
+  color: var(--gold-light);
+  opacity: 0.95;
+  margin-bottom: 0.25rem;
+}
+
+.curtain-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: #fff;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+
+.curtain-hint {
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ========== Main content ========== */
+.main {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+}
+
+.main.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.5s ease;
+}
+
+.reveal-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== Full-screen hero ========== */
+.hero.fullscreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.hero-above {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.names {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.names .groom,
+.names .bride {
+  display: block;
+}
+
+.names .and {
+  font-size: 0.45em;
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+  display: block;
+  margin: 0.1em 0;
+}
+
+.hero-below {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--rose);
+  max-width: 320px;
+  margin-top: 1.25rem;
+}
+
+/* ========== Scratch-off section ========== */
+.scratch-section {
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(252,240,235,0.5) 100%);
+}
+
+.scratch-title {
+  font-family: "Great Vibes", cursive;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--rose-deep);
+  margin-bottom: 0.35rem;
+}
+
+.scratch-hint {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-dark);
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.scratch-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.scratch-card {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
+  box-shadow: 0 6px 24px rgba(196, 69, 105, 0.2);
+}
+
+.scratch-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--rose-deep);
+  background: linear-gradient(135deg, var(--cream) 0%, #fff5f0 100%);
+}
+
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scratch-card.scratched .scratch-canvas {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.scratch-celebration {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--rose);
+  min-height: 1.5em;
+}
+
+.scratch-celebration.celebrating {
+  color: var(--rose-deep);
+  font-weight: 600;
+  animation: celebrate 0.6s ease;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ========== Countdown ========== */
+.countdown-section {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(248,240,235,0.8) 0%, rgba(255,251,247,0.9) 100%);
+}
+
+.countdown-title {
+  font-family: "Great Vibes", cursive;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--rose-deep);
+  margin-bottom: 1.25rem;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.countdown-box {
+  width: 4.5rem;
+  padding: 1.1rem 0.5rem;
+  background: #fff;
+  border: 2px solid rgba(196, 69, 105, 0.2);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(196, 69, 105, 0.08);
+}
+
+.countdown-value {
+  display: block;
+  font-family: "Outfit", sans-serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--rose-deep);
+  line-height: 1.2;
+}
+
+.countdown-unit {
+  display: block;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--rose);
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.countdown-until {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+/* ========== Venue / Mahal link ========== */
+.venue-section {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,251,247,0.95) 0%, #fff8f5 100%);
+}
+
+.venue-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--rose);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.venue-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.venue-address {
+  font-size: 1rem;
+  color: var(--rose-deep);
+  margin-bottom: 0.5rem;
+}
+
+.venue-date-time {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.btn-venue {
+  display: inline-block;
+  padding: 0.9rem 1.75rem;
+  background: linear-gradient(135deg, var(--rose-deep) 0%, var(--rose) 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(196, 69, 105, 0.35);
+}
+
+.btn-venue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(196, 69, 105, 0.4);
+}
+
+/* ========== Footer ========== */
+.contact {
+  text-align: center;
+  padding: 2rem 1.5rem 2.5rem;
+}
+
+.contact p {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  opacity: 0.85;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 520px) {
+  .scratch-row {
+    gap: 1rem;
+  }
+
+  .scratch-card {
+    width: 100px;
+    height: 100px;
+  }
+
+  .scratch-canvas {
+    width: 100px;
+    height: 100px;
+  }
+
+  .scratch-reveal {
+    font-size: 0.85rem;
+  }
+
+  .countdown-box {
+    width: 3.75rem;
+    padding: 0.85rem 0.4rem;
+  }
+
+  .countdown-value {
+    font-size: 1.5rem;
+  }
+}
