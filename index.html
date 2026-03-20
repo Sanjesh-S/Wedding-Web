@@ -3,94 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aravindhan & Nimisha - Wedding Invitation</title>
+  <title>Aravindhan & Nimisha - Wedding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Curtain overlay: click/tap to open -->
-  <div class="curtain-overlay" id="curtainOverlay" role="button" tabindex="0" aria-label="Open invitation">
+
+  <!-- ========== CURTAIN OVERLAY ========== -->
+  <div class="curtain-overlay" id="curtainOverlay">
     <div class="curtain curtain-left"></div>
     <div class="curtain curtain-right"></div>
     <div class="curtain-prompt">
-      <span class="curtain-om">ॐ</span>
-      <p class="curtain-text">You're invited</p>
-      <p class="curtain-hint">Tap to open</p>
+      <span class="curtain-om">&#2384;</span>
+      <span class="curtain-text">Tap to Open</span>
     </div>
+    <canvas class="sparkle-canvas" id="sparkleCanvas"></canvas>
   </div>
 
-  <main class="main" id="mainContent">
-    <!-- Full-screen hero: names + text only -->
-    <section class="hero fullscreen">
-      <p class="hero-above">With the heavenly blessings of our families</p>
-      <h1 class="names">
-        <span class="groom">S. Aravindhan</span>
-        <span class="and">&</span>
-        <span class="bride">D. Nimisha</span>
-      </h1>
-      <p class="hero-below">Request the pleasure of your presence at our wedding reception</p>
+  <!-- ========== PAGE CONTENT (hidden until curtains open) ========== -->
+  <div class="page" id="page">
+
+    <!-- Hero: full couple illustration -->
+    <section class="hero" id="hero">
+      <img class="hero-img" src="images/couple.jpg" alt="Aravindhan &amp; Nimisha" />
     </section>
 
-    <!-- Scratch-off section: 3 panels -->
-    <section class="scratch-section">
-      <h2 class="scratch-title">Reveal</h2>
-      <p class="scratch-hint">Scratch to discover</p>
-      <div class="scratch-row">
-        <div class="scratch-card" data-scratch="0">
-          <div class="scratch-reveal">Celebrate</div>
-          <canvas class="scratch-canvas" width="120" height="120" aria-hidden="true"></canvas>
-        </div>
-        <div class="scratch-card" data-scratch="1">
-          <div class="scratch-reveal">With Us</div>
-          <canvas class="scratch-canvas" width="120" height="120" aria-hidden="true"></canvas>
-        </div>
-        <div class="scratch-card" data-scratch="2">
-          <div class="scratch-reveal">11.04.2026</div>
-          <canvas class="scratch-canvas" width="120" height="120" aria-hidden="true"></canvas>
-        </div>
-      </div>
-      <p class="scratch-celebration" id="scratchCelebration" aria-live="polite">Scratch all three to celebrate!</p>
-    </section>
+    <!-- Invitation sections -->
+    <main class="invite">
 
-    <!-- Countdown -->
-    <section class="countdown-section" id="countdown" aria-label="Countdown to reception">
-      <h2 class="countdown-title">Countdown</h2>
-      <div class="countdown-grid">
-        <div class="countdown-box">
-          <span class="countdown-value" id="countdown-days">0</span>
-          <span class="countdown-unit">Days</span>
+      <section class="sec sec-blessings" id="blessings">
+        <h2 class="sec-title">With the heavenly blessings of</h2>
+        <div class="parents-grid">
+          <div class="parent-col stagger-item">
+            <p class="parent-label">Groom's Parents</p>
+            <p class="parent-name">Mr. N. Sakthivel</p>
+            <p class="parent-name">Mrs. S. Lalitha, M.Sc., B.Ed.</p>
+            <p class="parent-place">Vagarayanpalayam, Coimbatore</p>
+          </div>
+          <div class="parent-col stagger-item">
+            <p class="parent-label">Bride's Parents</p>
+            <p class="parent-name">Mr. S.K. Devan</p>
+            <p class="parent-name">Mrs. D. Abutha</p>
+            <p class="parent-place">Sulur, Coimbatore</p>
+          </div>
         </div>
-        <div class="countdown-box">
-          <span class="countdown-value" id="countdown-hours">0</span>
-          <span class="countdown-unit">Hours</span>
-        </div>
-        <div class="countdown-box">
-          <span class="countdown-value" id="countdown-mins">0</span>
-          <span class="countdown-unit">Min</span>
-        </div>
-        <div class="countdown-box">
-          <span class="countdown-value" id="countdown-secs">0</span>
-          <span class="countdown-unit">Sec</span>
-        </div>
-      </div>
-      <p class="countdown-until">until the big day</p>
-    </section>
+      </section>
 
-    <!-- Venue / Mahal link -->
-    <section class="venue-section">
-      <p class="venue-heading">The celebration will take place at</p>
-      <h2 class="venue-name">Rangas Mahal</h2>
-      <p class="venue-address">Kaniyur, Coimbatore</p>
-      <p class="venue-date-time">11<sup>th</sup> April 2026 · 6:00 PM – 9:00 PM</p>
-      <a class="btn-venue" href="https://www.google.com/maps/search/Rangas+Mahal+Kaniyur+Coimbatore" target="_blank" rel="noopener noreferrer">View venue & get directions</a>
-    </section>
+      <div class="divider"><span class="diamond">&#9670;</span></div>
 
-    <footer class="contact">
-      <p>We look forward to celebrating with you</p>
-    </footer>
-  </main>
+      <section class="sec sec-countdown" id="countdown">
+        <h2 class="sec-title">Countdown</h2>
+        <p class="cd-sub">UNTIL 12 APRIL 2026</p>
+        <div class="cd-row">
+          <div class="cd-item">
+            <span class="cd-num" id="cd-days" data-target="0">0</span>
+            <span class="cd-label">Days</span>
+          </div>
+          <span class="cd-sep"></span>
+          <div class="cd-item">
+            <span class="cd-num" id="cd-hours" data-target="0">0</span>
+            <span class="cd-label">Hours</span>
+          </div>
+          <span class="cd-sep"></span>
+          <div class="cd-item">
+            <span class="cd-num" id="cd-mins" data-target="0">0</span>
+            <span class="cd-label">Minutes</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"><span class="diamond">&#9670;</span></div>
+
+      <section class="sec sec-venue" id="venue">
+        <h2 class="sec-title">Where We Celebrate</h2>
+        <h3 class="venue-name">Rangas Mahal</h3>
+        <p class="venue-datetime">12 April 2026 &middot; 6:00 AM</p>
+        <p class="venue-address">Karumathampatti, Coimbatore</p>
+        <div class="venue-map">
+          <iframe
+            src="https://www.google.com/maps?q=Rangas+Mahal+Kaniyur+Coimbatore&output=embed"
+            width="100%" height="260" style="border:0; border-radius:8px;"
+            allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Venue location"></iframe>
+        </div>
+        <a class="venue-link" href="https://www.google.com/maps/search/Rangas+Mahal+Kaniyur+Coimbatore" target="_blank" rel="noopener noreferrer">&#9737; Open in Maps</a>
+      </section>
+
+      <footer class="footer">
+        <p class="footer-line">We look forward to celebrating with you</p>
+        <p class="footer-names">Aravindhan & Nimisha</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ========== MUSIC TOGGLE ========== -->
+  <button class="music-btn" id="musicBtn" aria-label="Toggle music" title="Toggle music">
+    <svg class="music-icon music-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg class="music-icon music-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </svg>
+  </button>
+  <!--
+    Place your audio file at: audio/music.mp3
+    A soft nadaswaram or veena track works beautifully.
+    Free options: https://pixabay.com/music/search/indian%20wedding/
+  -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="audio/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Petal container (populated by JS) -->
+  <div class="petals-container" id="petalsContainer"></div>
 
   <script src="script.js"></script>
 </body>

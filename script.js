@@ -1,215 +1,216 @@
+/* ============================
+   Wedding Invitation – Premium Script
+   ============================ */
+
 (function () {
-  var overlay = document.getElementById('curtainOverlay');
-  var main = document.getElementById('mainContent');
+  'use strict';
+
+  const overlay    = document.getElementById('curtainOverlay');
+  const page       = document.getElementById('page');
+  const canvas     = document.getElementById('sparkleCanvas');
+  const ctx        = canvas.getContext('2d');
+  const musicBtn   = document.getElementById('musicBtn');
+  const bgMusic    = document.getElementById('bgMusic');
+  const petalsBox  = document.getElementById('petalsContainer');
+
+  /* ==========================================================
+     1. CURTAIN OPENING + GOLD SPARKLES
+     ========================================================== */
+
+  let opened = false;
 
   function openCurtains() {
-    if (!overlay || overlay.classList.contains('curtains-open')) return;
-    overlay.classList.add('curtains-open');
-    if (main) main.classList.add('revealed');
-    var hero = document.querySelector('.hero');
-    if (hero) hero.classList.add('in-view');
+    if (opened) return;
+    opened = true;
+
+    overlay.classList.add('opened');
+    page.classList.add('revealed');
+    launchSparkles();
+
+    setTimeout(() => {
+      overlay.classList.add('dismissed');
+      musicBtn.classList.add('visible');
+      spawnPetals();
+    }, 1100);
+
+    setTimeout(() => { overlay.remove(); }, 1800);
   }
 
-  if (overlay) {
-    overlay.addEventListener('click', openCurtains);
-    overlay.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openCurtains();
-      }
-    });
-  }
+  overlay.addEventListener('click', openCurtains);
+  overlay.addEventListener('touchstart', openCurtains, { passive: true });
 
-  // Countdown to 11 April 2026, 6:00 PM IST
-  var receptionDate = new Date('2026-04-11T18:00:00+05:30');
-  var countdownEl = document.getElementById('countdown');
-  var daysEl = document.getElementById('countdown-days');
-  var hoursEl = document.getElementById('countdown-hours');
-  var minsEl = document.getElementById('countdown-mins');
-  var secsEl = document.getElementById('countdown-secs');
+  /* ==========================================================
+     2. GOLD SPARKLE / CONFETTI BURST
+     ========================================================== */
 
-  function updateCountdown() {
-    var now = new Date();
-    var diff = receptionDate - now;
-    if (diff <= 0) {
-      if (daysEl) daysEl.textContent = '0';
-      if (hoursEl) hoursEl.textContent = '0';
-      if (minsEl) minsEl.textContent = '0';
-      if (secsEl) secsEl.textContent = '0';
-      return;
-    }
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    var secs = Math.floor((diff % (1000 * 60)) / 1000);
-    if (daysEl) daysEl.textContent = days;
-    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-    if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
-    if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
-  }
-
-  if (countdownEl) {
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  }
-
-  // Scratch-off: draw metallic overlay and erase on pointer move
-  var scratchCards = document.querySelectorAll('.scratch-card');
-  var celebrationEl = document.getElementById('scratchCelebration');
-  var scratchedCount = 0;
-  var celebrationShown = false;
-
-  function drawMetallic(ctx, w, h) {
-    var gradient = ctx.createRadial-gradient(w / 2, h / 2, 0, w / 2, h / 2, w * 0.8);
-    gradient.addColorStop(0, '#e8d48b');
-    gradient.addColorStop(0.35, '#c9a227');
-    gradient.addColorStop(0.6, '#b8860b');
-    gradient.addColorStop(1, '#8b6914');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = 'rgba(255,255,255,0.25)';
-    for (var i = 0; i < 40; i++) {
-      var x = Math.random() * w;
-      var y = Math.random() * h;
-      var r = 1 + Math.random() * 2;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  function initScratch(card) {
-    var canvas = card.querySelector('.scratch-canvas');
-    if (!canvas) return;
-
-    var rect = card.getBoundingClientRect();
-    var dpr = window.devicePixelRatio || 1;
-    var size = Math.min(rect.width, rect.height, 120);
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
-    canvas.style.width = size + 'px';
-    canvas.style.height = size + 'px';
-
-    var ctx = canvas.getContext('2d');
+  function launchSparkles() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width  = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
     ctx.scale(dpr, dpr);
-    var w = size;
-    var h = size;
 
-    var gradient = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w * 0.8);
-    gradient.addColorStop(0, '#e8d48b');
-    gradient.addColorStop(0.35, '#c9a227');
-    gradient.addColorStop(0.6, '#b8860b');
-    gradient.addColorStop(1, '#8b6914');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
-    for (var i = 0; i < 50; i++) {
-      var x = Math.random() * w;
-      var y = Math.random() * h;
-      var r = 0.5 + Math.random() * 1.5;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const COLORS = ['#c9a84c', '#e0cc8a', '#fff8e1', '#f5d5d8', '#ffffff'];
+    const particles = [];
+
+    for (let i = 0; i < 90; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2 + Math.random() * 5;
+      particles.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.5,
+        r: 1.5 + Math.random() * 3,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        life: 1,
+        decay: .008 + Math.random() * .012,
+        gravity: .04 + Math.random() * .03
+      });
     }
 
-    var radius = 18;
-    var isScratching = false;
-    var totalPixels = w * h;
-    var clearedPixels = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
 
-    function getPos(e) {
-      var r = card.getBoundingClientRect();
-      var x = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX) - r.left;
-      var y = (e.clientY !== undefined ? e.clientY : e.touches[0].clientY) - r.top;
-      var scaleX = w / r.width;
-      var scaleY = h / r.height;
-      return { x: x * scaleX, y: y * scaleY };
+      for (const p of particles) {
+        if (p.life <= 0) continue;
+        alive = true;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.life -= p.decay;
+        ctx.globalAlpha = p.life;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      if (alive) requestAnimationFrame(draw);
     }
 
-    function scratch(x, y) {
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-over';
-      clearedPixels += Math.PI * radius * radius;
-      if (clearedPixels > totalPixels * 0.4 && !card.classList.contains('scratched')) {
-        card.classList.add('scratched');
-        scratchedCount++;
-        if (celebrationEl && scratchedCount >= 3 && !celebrationShown) {
-          celebrationShown = true;
-          celebrationEl.textContent = 'Celebrations!';
-          celebrationEl.classList.add('celebrating');
+    requestAnimationFrame(draw);
+  }
+
+  /* ==========================================================
+     3. FLOATING FLOWER PETALS
+     ========================================================== */
+
+  function spawnPetals() {
+    const COUNT = 18;
+    for (let i = 0; i < COUNT; i++) {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.style.left = Math.random() * 100 + '%';
+      el.style.animationDuration = (9 + Math.random() * 8) + 's';
+      el.style.animationDelay = (Math.random() * 10) + 's';
+      petalsBox.appendChild(el);
+    }
+  }
+
+  /* ==========================================================
+     4. PARALLAX ON HERO IMAGE
+     ========================================================== */
+
+  const heroImg = document.querySelector('.hero-img');
+  const hero    = document.querySelector('.hero');
+
+  function parallax() {
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const scrolled = window.scrollY;
+    const offset = scrolled * 0.35;
+    heroImg.style.transform = 'translateY(' + offset + 'px)';
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(parallax), { passive: true });
+
+  /* ==========================================================
+     5. COUNTDOWN (with count-up animation on first view)
+     ========================================================== */
+
+  const target = new Date('2026-04-12T06:00:00+05:30').getTime();
+  const $d = document.getElementById('cd-days');
+  const $h = document.getElementById('cd-hours');
+  const $m = document.getElementById('cd-mins');
+  let countdownAnimated = false;
+
+  function getRemaining() {
+    const diff = Math.max(0, target - Date.now());
+    return {
+      d: Math.floor(diff / 86400000),
+      h: Math.floor((diff % 86400000) / 3600000),
+      m: Math.floor((diff % 3600000) / 60000)
+    };
+  }
+
+  function setCountdown(vals) {
+    $d.textContent = vals.d;
+    $h.textContent = vals.h;
+    $m.textContent = vals.m;
+  }
+
+  function animateCountUp() {
+    if (countdownAnimated) return;
+    countdownAnimated = true;
+    const final = getRemaining();
+    const duration = 1200;
+    const start = performance.now();
+
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      setCountdown({
+        d: Math.round(final.d * ease),
+        h: Math.round(final.h * ease),
+        m: Math.round(final.m * ease)
+      });
+      if (t < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  setInterval(() => { if (countdownAnimated) setCountdown(getRemaining()); }, 30000);
+
+  /* ==========================================================
+     6. SCROLL-REVEAL SECTIONS + COUNTDOWN TRIGGER
+     ========================================================== */
+
+  const sections = document.querySelectorAll('.sec');
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          if (e.target.id === 'countdown') animateCountUp();
+          sectionObserver.unobserve(e.target);
         }
-      }
-    }
-
-    function onStart(e) {
-      e.preventDefault();
-      isScratching = true;
-      var pos = getPos(e);
-      scratch(pos.x, pos.y);
-    }
-
-    function onMove(e) {
-      if (!isScratching) return;
-      e.preventDefault();
-      var pos = getPos(e);
-      scratch(pos.x, pos.y);
-    }
-
-    function onEnd() {
-      isScratching = false;
-    }
-
-    canvas.addEventListener('mousedown', onStart);
-    canvas.addEventListener('mousemove', onMove);
-    canvas.addEventListener('mouseup', onEnd);
-    canvas.addEventListener('mouseleave', onEnd);
-    card.addEventListener('touchstart', onStart, { passive: false });
-    card.addEventListener('touchmove', onMove, { passive: false });
-    card.addEventListener('touchend', onEnd);
-  }
-
-  function initScratchWhenVisible() {
-    scratchCards.forEach(function (card) {
-      var canvas = card.querySelector('.scratch-canvas');
-      if (canvas && !canvas.dataset.inited) {
-        canvas.dataset.inited = '1';
-        initScratch(card);
-      }
-    });
-  }
-
-  if (scratchCards.length) {
-    var scratchSection = document.querySelector('.scratch-section');
-    if (scratchSection && typeof IntersectionObserver !== 'undefined') {
-      var io = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) initScratchWhenVisible();
-          });
-        },
-        { threshold: 0.2 }
-      );
-      io.observe(scratchSection);
-    } else {
-      initScratchWhenVisible();
-    }
-  }
-
-  // Scroll reveal
-  var sections = document.querySelectorAll('.hero, .scratch-section, .countdown-section, .venue-section, .contact');
-  var observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) entry.target.classList.add('in-view');
       });
     },
-    { threshold: 0.12, rootMargin: '0px 0px -30px 0px' }
+    { threshold: 0.15 }
   );
-  sections.forEach(function (el) {
-    el.classList.add('reveal-section');
-    observer.observe(el);
+  sections.forEach((s) => sectionObserver.observe(s));
+
+  /* ==========================================================
+     7. MUSIC TOGGLE
+     ========================================================== */
+
+  let playing = false;
+
+  musicBtn.addEventListener('click', () => {
+    if (playing) {
+      bgMusic.pause();
+      musicBtn.classList.remove('playing');
+    } else {
+      bgMusic.play().catch(() => {});
+      musicBtn.classList.add('playing');
+    }
+    playing = !playing;
   });
+
 })();
