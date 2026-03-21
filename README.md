@@ -1,24 +1,26 @@
-# Wedding Invitation — Aravindhan & Nimisha
+# Wedding invitation — Aravindhan & Nimisha
 
-Responsive wedding invitation (HTML, CSS, Bootstrap, countdown).
+Single-page **ultra-premium** invitation (`index.html`): curtain reveal, hero, couple cards, events, venue, Karaikudi feast, story timeline, and footer. Styles and scripts are inline in that file.
 
-## Customised for
+## Details
 
 - **Couple:** S. Aravindhan (M.Sc.) & D. Nimisha (B.Sc.)
 - **Wedding:** Sunday, 12 April 2026 — 6:00 AM — Rangas Mahal, Karumathampatti, Coimbatore
-- **Reception (eve):** Saturday, 11 April 2026 — 6:00 PM – 9:00 PM (same venue, per original details)
+- **Reception:** Saturday, 11 April 2026 — 6:00 PM – 9:00 PM (same venue)
 
-Couple photo: `img/couple.jpg` (replace with your own if you like).
+## Assets
+
+- **Photo:** `img/couple.jpg` (used for both profile circles in the couple section)
+- **Optional extras in `img/`:** `bg.png`, `bg-preview.jpg`, etc., if you extend the page later
 
 ## Run locally
 
-Open `index.html` in a browser, or use any static server (e.g. VS Code Live Server).
+Open `index.html` in a browser, or use a static server (e.g. VS Code Live Server).
 
-## Optional next steps
+## GitHub Pages
 
-1. **Social links:** Update footer Instagram / YouTube / Facebook `href`s.
-2. **Feast copy:** Edit the Karaikudi / Chettinad section (`#feast`) if your menu or catering differs.
+The site loads from the repo root **`index.html`**.
 
 ## Credits
 
-Template based on open-source wedding invitation projects using Bootstrap and SimplyCountdown.
+Fonts via Google Fonts (Playfair Display, Cormorant Garamond, Montserrat).

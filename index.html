@@ -1,353 +1,1659 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aravindhan &amp; Nimisha — Wedding</title>
-    <link rel="icon" href="https://www.svgrepo.com/show/214817/wedding-marry.svg" type="image/x-icon" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aravindhan & Nimisha - Wedding Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:ital,wght@0,300..600;1,300..600&display=swap" rel="stylesheet" />
+        :root {
+            --primary-gold: #C9A961;
+            --dark-gold: #A68B4A;
+            --light-gold: #E5D4A6;
+            --deep-maroon: #5D001E;
+            --burgundy: #8B2635;
+            --dark-burgundy: #6B1F3A;
+            --cream: #FAF6F0;
+            --light-cream: #FFF9F3;
+            --dark: #2C1810;
+            --warm-brown: #8B6F47;
+        }
 
-    <!-- SimplyCountdown.js -->
-    <link rel="stylesheet" href="countdown/simplyCountdown.theme.default.css" />
-    <script src="countdown/simplyCountdown.min.js"></script>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+        /* Curtain Animation - Luxurious Velvet */
+        .curtain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 9999;
+            pointer-events: all;
+        }
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+        .curtain-container.active {
+            pointer-events: none;
+        }
 
-  <body>
-    <section id="hero" class="hero w-100 h-100 p-3 mx-auto text-center d-flex justify-content-center align-items-center">
-      <main>
-        <h4>To <span>Family &amp; Friends</span></h4>
-        <h1>Aravindhan &amp; Nimisha</h1>
-        <p>With the heavenly blessings of our parents, we invite you to our wedding on</p>
-        <div class="simply-countdown"></div>
-        <a href="#home" class="btn btn-lg mt-4" onClick="enableScroll()">Open Invitation</a>
-      </main>
-    </section>
+        .curtain {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: 
+                linear-gradient(to bottom, 
+                    #3D0814 0%,
+                    #5D001E 15%,
+                    #8B2635 30%,
+                    #5D001E 50%,
+                    #8B2635 70%,
+                    #5D001E 85%,
+                    #3D0814 100%);
+            box-shadow: 
+                inset -20px 0 60px rgba(0,0,0,0.8),
+                inset 20px 0 60px rgba(0,0,0,0.8),
+                inset 0 0 100px rgba(0,0,0,0.5);
+            transition: transform 3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            overflow: hidden;
+            border: 3px solid rgba(201, 169, 97, 0.4);
+        }
 
-    <nav class="navbar navbar-expand-md navbar-light sticky-top mynavbar">
-      <div class="container">
-        <a class="navbar-brand" href="#home">A &amp; N</a>
-        <button
-          class="navbar-toggler border-0"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mainNav"
-          aria-controls="mainNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav ms-auto mb-2 mb-md-0 align-items-md-center gap-md-1">
-            <li class="nav-item"><a class="nav-link px-md-3" href="#home">Home</a></li>
-            <li class="nav-item"><a class="nav-link px-md-3" href="#info">Info</a></li>
-            <li class="nav-item"><a class="nav-link px-md-3" href="#feast">Feast</a></li>
-            <li class="nav-item"><a class="nav-link px-md-3" href="#story">Story</a></li>
-          </ul>
+        /* Velvet texture */
+        .curtain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    rgba(0,0,0,0.2) 2px,
+                    transparent 4px,
+                    rgba(255,255,255,0.05) 6px,
+                    transparent 8px);
+            opacity: 0.6;
+        }
+
+        /* Gold trim on curtains */
+        .curtain::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(to right,
+                var(--primary-gold),
+                var(--dark-gold),
+                var(--primary-gold));
+            box-shadow: 0 0 30px rgba(201, 169, 97, 0.6);
+        }
+
+        .curtain-left {
+            left: 0;
+            transform-origin: left;
+        }
+
+        .curtain-left::after {
+            right: 0;
+        }
+
+        .curtain-right {
+            right: 0;
+            transform-origin: right;
+        }
+
+        .curtain-right::after {
+            left: 0;
+        }
+
+        .curtain-container.opened .curtain-left {
+            transform: translateX(-100%) rotateY(10deg);
+        }
+
+        .curtain-container.opened .curtain-right {
+            transform: translateX(100%) rotateY(-10deg);
+        }
+
+        /* Decorative tassels */
+        .curtain-tassel {
+            position: absolute;
+            top: 20%;
+            width: 80px;
+            height: 120px;
+            opacity: 0.8;
+        }
+
+        .curtain-left .curtain-tassel {
+            right: 60px;
+            background: 
+                radial-gradient(ellipse at center top, var(--primary-gold) 0%, var(--dark-gold) 100%);
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .curtain-right .curtain-tassel {
+            left: 60px;
+            background: 
+                radial-gradient(ellipse at center top, var(--primary-gold) 0%, var(--dark-gold) 100%);
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Welcome overlay - Luxurious */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: 
+                radial-gradient(ellipse at center, 
+                    rgba(61, 8, 20, 0.98) 0%, 
+                    rgba(20, 5, 10, 1) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 2s ease;
+        }
+
+        .welcome-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(201, 169, 97, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(201, 169, 97, 0.08) 0%, transparent 40%);
+            animation: glow 6s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Om symbol with glow */
+        .om-welcome {
+            font-size: 5rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInGlow 1.5s ease forwards;
+            filter: drop-shadow(0 0 30px rgba(201, 169, 97, 0.8));
+        }
+
+        @keyframes fadeInGlow {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+        }
+
+        .welcome-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, 
+                #FFD700 0%, 
+                #FFA500 25%,
+                #FFD700 50%, 
+                #FFA500 75%,
+                #FFD700 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.3s forwards, shimmer 3s linear infinite;
+            letter-spacing: 8px;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .welcome-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--light-cream);
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.6s forwards;
+            text-align: center;
+            max-width: 700px;
+            line-height: 2;
+            font-weight: 400;
+        }
+
+        .open-invitation-btn {
+            padding: 1.8rem 5rem;
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                var(--dark-gold) 50%,
+                var(--primary-gold) 100%);
+            background-size: 200% auto;
+            border: 3px solid var(--primary-gold);
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.9s forwards;
+            position: relative;
+            overflow: hidden;
+            z-index: 10001;
+            box-shadow: 
+                0 15px 40px rgba(201, 169, 97, 0.5),
+                inset 0 -2px 10px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+
+        .open-invitation-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            transition: left 0.7s ease;
+        }
+
+        .open-invitation-btn:hover::before {
+            left: 100%;
+        }
+
+        .open-invitation-btn:hover {
+            background-position: 200% center;
+            transform: translateY(-3px);
+            box-shadow: 
+                0 20px 50px rgba(201, 169, 97, 0.7),
+                inset 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        /* Main content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 2s ease 2.5s;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        /* Hero section - Premium with Temple Background */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: 
+                linear-gradient(135deg, 
+                    rgba(250, 246, 240, 1) 0%, 
+                    rgba(255, 250, 243, 1) 50%,
+                    rgba(250, 246, 240, 1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Elegant border at top */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: 
+                repeating-linear-gradient(90deg,
+                    var(--deep-maroon) 0px,
+                    var(--deep-maroon) 20px,
+                    var(--primary-gold) 20px,
+                    var(--primary-gold) 40px,
+                    var(--deep-maroon) 40px,
+                    var(--deep-maroon) 60px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Temple Gopuram Silhouettes - More Visible */
+        .gopuram-left, .gopuram-right {
+            position: absolute;
+            width: 400px;
+            height: 700px;
+            opacity: 0.12;
+            z-index: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .gopuram-left {
+            left: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 600'%3E%3Cdefs%3E%3ClinearGradient id='templeGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%235D001E;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%238B2635;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%235D001E;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23templeGrad)' d='M150 10 L150 30 L140 30 L140 50 L130 50 L130 70 L120 70 L120 90 L110 90 L110 110 L100 110 L100 130 L90 130 L90 150 L80 150 L80 170 L70 170 L70 600 L230 600 L230 170 L220 170 L220 150 L210 150 L210 130 L200 130 L200 110 L190 110 L190 90 L180 90 L180 70 L170 70 L170 50 L160 50 L160 30 L150 30 Z M145 45 L155 45 L155 65 L145 65 Z M135 85 L165 85 L165 105 L135 105 Z M125 125 L175 125 L175 145 L125 145 Z M115 165 L185 165 L185 185 L115 185 Z M105 205 L195 205 L195 225 L105 225 Z M95 245 L205 245 L205 265 L95 265 Z M85 285 L215 285 L215 305 L85 305 Z M80 325 L220 325 L220 345 L80 345 Z M75 365 L225 365 L225 385 L75 385 Z M75 405 L225 405 L225 425 L75 425 Z M75 445 L225 445 L225 465 L75 465 Z'/%3E%3Cpath fill='%23C9A961' opacity='0.3' d='M140 55 L160 55 L160 60 L140 60 Z M130 90 L170 90 L170 95 L130 95 Z M120 130 L180 130 L180 135 L120 135 Z'/%3E%3C/svg%3E");
+        }
+
+        .gopuram-right {
+            right: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 600'%3E%3Cdefs%3E%3ClinearGradient id='templeGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%235D001E;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%238B2635;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%235D001E;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23templeGrad2)' d='M150 10 L150 30 L140 30 L140 50 L130 50 L130 70 L120 70 L120 90 L110 90 L110 110 L100 110 L100 130 L90 130 L90 150 L80 150 L80 170 L70 170 L70 600 L230 600 L230 170 L220 170 L220 150 L210 150 L210 130 L200 130 L200 110 L190 110 L190 90 L180 90 L180 70 L170 70 L170 50 L160 50 L160 30 L150 30 Z M145 45 L155 45 L155 65 L145 65 Z M135 85 L165 85 L165 105 L135 105 Z M125 125 L175 125 L175 145 L125 145 Z M115 165 L185 165 L185 185 L115 185 Z M105 205 L195 205 L195 225 L105 225 Z M95 245 L205 245 L205 265 L95 265 Z M85 285 L215 285 L215 305 L85 305 Z M80 325 L220 325 L220 345 L80 345 Z M75 365 L225 365 L225 385 L75 385 Z M75 405 L225 405 L225 425 L75 425 Z M75 445 L225 445 L225 465 L75 465 Z'/%3E%3Cpath fill='%23C9A961' opacity='0.3' d='M140 55 L160 55 L160 60 L140 60 Z M130 90 L170 90 L170 95 L130 95 Z M120 130 L180 130 L180 135 L120 135 Z'/%3E%3C/svg%3E");
+        }
+
+        /* Kolam mandala pattern - Larger and more visible */
+        .kolam-mandala {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            opacity: 0.15;
+            background-image: 
+                /* Central lotus */
+                radial-gradient(circle at 50% 50%, transparent 48%, var(--primary-gold) 49%, var(--primary-gold) 51%, transparent 52%),
+                radial-gradient(circle at 50% 50%, transparent 58%, var(--primary-gold) 59%, var(--primary-gold) 61%, transparent 62%),
+                radial-gradient(circle at 50% 50%, transparent 68%, var(--burgundy) 69%, var(--burgundy) 71%, transparent 72%),
+                /* Petals */
+                radial-gradient(ellipse 150px 300px at 50% 20%, var(--primary-gold) 40%, transparent 41%),
+                radial-gradient(ellipse 150px 300px at 50% 80%, var(--primary-gold) 40%, transparent 41%),
+                radial-gradient(ellipse 300px 150px at 20% 50%, var(--primary-gold) 40%, transparent 41%),
+                radial-gradient(ellipse 300px 150px at 80% 50%, var(--primary-gold) 40%, transparent 41%);
+            background-size: 900px 900px;
+            background-position: center;
+            animation: rotate 150s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Peacock decorations */
+        .peacock-left, .peacock-right {
+            position: absolute;
+            bottom: 80px;
+            width: 180px;
+            height: 180px;
+            font-size: 10rem;
+            opacity: 0.85;
+            z-index: 1;
+            animation: float 5s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        .peacock-left {
+            left: 50px;
+            transform: scaleX(-1);
+        }
+
+        .peacock-right {
+            right: 50px;
+        }
+
+        /* Floral pillar decorations */
+        .floral-pillar {
+            position: absolute;
+            width: 150px;
+            height: 100%;
+            opacity: 0.2;
+            z-index: 0;
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                transparent 20%,
+                rgba(139, 195, 74, 0.3) 30%,
+                rgba(233, 30, 99, 0.2) 50%,
+                rgba(139, 195, 74, 0.3) 70%,
+                transparent 80%,
+                transparent 100%);
+        }
+
+        .floral-pillar.left {
+            left: 0;
+            background-image: 
+                radial-gradient(ellipse 40px 60px at 75px 30%, rgba(233, 30, 99, 0.4), transparent),
+                radial-gradient(ellipse 35px 55px at 75px 35%, rgba(139, 195, 74, 0.3), transparent),
+                radial-gradient(ellipse 40px 60px at 75px 25%, rgba(233, 30, 99, 0.4), transparent);
+            background-repeat: repeat-y;
+            background-size: 150px 150px;
+            background-position: 0 0;
+        }
+
+        .floral-pillar.right {
+            right: 0;
+            background-image: 
+                radial-gradient(ellipse 40px 60px at 75px 30%, rgba(233, 30, 99, 0.4), transparent),
+                radial-gradient(ellipse 35px 55px at 75px 35%, rgba(139, 195, 74, 0.3), transparent),
+                radial-gradient(ellipse 40px 60px at 75px 25%, rgba(233, 30, 99, 0.4), transparent);
+            background-repeat: repeat-y;
+            background-size: 150px 150px;
+            background-position: 0 0;
+        }
+
+        /* Ganesha at top */
+        .ganesha-top {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5rem;
+            opacity: 0.7;
+            z-index: 2;
+            filter: drop-shadow(0 3px 10px rgba(139, 38, 53, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Floral arch decoration */
+        .floral-arch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 200px;
+            opacity: 0.15;
+            z-index: 0;
+            background-image: 
+                radial-gradient(ellipse at top, rgba(139, 195, 74, 0.5), transparent 70%),
+                radial-gradient(ellipse at 30% 50%, rgba(233, 30, 99, 0.4) 10%, transparent 30%),
+                radial-gradient(ellipse at 70% 50%, rgba(233, 30, 99, 0.4) 10%, transparent 30%),
+                radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.3) 15%, transparent 35%);
+            background-size: 600px 200px;
+            border-radius: 50% 50% 0 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Om symbol */
+        .om-symbol {
+            font-size: 5rem;
+            margin-bottom: 2.5rem;
+            filter: drop-shadow(0 5px 15px rgba(201, 169, 97, 0.5));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .invitation-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--warm-brown);
+            margin-bottom: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .couple-names {
+            font-family: 'Playfair Display', serif;
+            font-size: 6.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, 
+                var(--deep-maroon) 0%, 
+                var(--burgundy) 50%,
+                var(--deep-maroon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2.5rem;
+            line-height: 1.1;
+            letter-spacing: 2px;
+        }
+
+        .ampersand {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 5rem;
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                #FFD700 50%,
+                var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 2rem;
+            filter: drop-shadow(0 3px 8px rgba(201, 169, 97, 0.4));
+            font-weight: 700;
+        }
+
+        .wedding-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .wedding-venue {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: var(--warm-brown);
+            letter-spacing: 4px;
+            font-weight: 500;
+        }
+
+        .divider {
+            width: 350px;
+            height: 3px;
+            background: linear-gradient(to right, 
+                transparent, 
+                var(--primary-gold), 
+                var(--burgundy),
+                var(--primary-gold),
+                transparent);
+            margin: 3.5rem auto;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-gold);
+            font-size: 1.5rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .divider::before {
+            left: -25px;
+        }
+
+        .divider::after {
+            right: -25px;
+        }
+
+        /* Couple section - Gradient Cards */
+        .couple-section {
+            padding: 7rem clamp(1rem, 4vw, 2rem);
+            background: 
+                linear-gradient(135deg, 
+                    #FFF9F3 0%, 
+                    #FAF6F0 50%,
+                    #FFF9F3 100%);
+            position: relative;
+            overflow-x: clip;
+            width: 100%;
+        }
+
+        .couple-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(201, 169, 97, 0.05) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(201, 169, 97, 0.05) 2px, transparent 2px);
+            background-size: 60px 60px;
+            opacity: 0.7;
+        }
+
+        .couple-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(2rem, 5vw, 3.5rem);
+            position: relative;
+            z-index: 1;
+            align-items: start;
+            justify-items: center;
+        }
+
+        .couple-card {
+            text-align: center;
+            padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            min-width: 0;
+            background: 
+                linear-gradient(135deg, 
+                    rgba(201, 169, 97, 0.15) 0%, 
+                    rgba(139, 38, 53, 0.15) 100%);
+            border-radius: 25px;
+            box-shadow: 
+                0 15px 50px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.5);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .couple-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 25px 70px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .couple-card::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                var(--burgundy) 50%, 
+                var(--primary-gold) 100%);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .couple-card::after {
+            content: '❋';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .couple-image {
+            width: min(280px, 78vw);
+            height: min(280px, 78vw);
+            max-width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center center;
+            margin: 3.5rem auto 2.5rem;
+            display: block;
+            border: 8px solid var(--primary-gold);
+            box-shadow: 
+                0 0 0 4px white,
+                0 0 0 8px var(--burgundy),
+                0 20px 50px rgba(0,0,0,0.3),
+                inset 0 0 30px rgba(201, 169, 97, 0.3);
+            transition: transform 0.5s ease;
+            position: relative;
+        }
+
+        .couple-card:hover .couple-image {
+            transform: scale(1.08) rotate(-3deg);
+        }
+
+        .couple-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, 
+                var(--deep-maroon) 0%, 
+                var(--burgundy) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .couple-degree {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--warm-brown);
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .couple-parents {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: var(--dark);
+            line-height: 2.2;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .couple-parents strong {
+            font-weight: 600;
+            color: var(--burgundy);
+        }
+
+        .couple-location {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--warm-brown);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, 
+                var(--deep-maroon) 0%, 
+                var(--burgundy) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 5rem;
+            font-weight: 800;
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '✦';
+            display: block;
+            color: var(--primary-gold);
+            font-size: 2.5rem;
+            margin-top: 1.5rem;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+
+        /* Events section */
+        .events-section {
+            padding: 7rem 2rem;
+            background: 
+                linear-gradient(135deg, 
+                    rgba(250, 246, 240, 1) 0%, 
+                    rgba(255, 248, 240, 1) 50%,
+                    rgba(250, 246, 240, 1) 100%);
+            position: relative;
+        }
+
+        .events-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, 
+                    transparent 0px, 
+                    transparent 98px, 
+                    rgba(201, 169, 97, 0.1) 98px, 
+                    rgba(201, 169, 97, 0.1) 100px),
+                repeating-linear-gradient(0deg, 
+                    transparent 0px, 
+                    transparent 98px, 
+                    rgba(201, 169, 97, 0.1) 98px, 
+                    rgba(201, 169, 97, 0.1) 100px);
+            opacity: 0.6;
+        }
+
+        .events-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-card {
+            background: white;
+            padding: 4rem 3rem;
+            text-align: center;
+            border-top: 6px solid var(--primary-gold);
+            border-bottom: 6px solid var(--burgundy);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(201, 169, 97, 0.2), 
+                transparent);
+            transition: left 0.8s ease;
+        }
+
+        .event-card:hover::before {
+            left: 100%;
+        }
+
+        .event-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+        }
+
+        .event-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        .event-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        .event-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .event-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
+            color: var(--warm-brown);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+        }
+
+        .event-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--dark);
+            line-height: 1.9;
+            font-weight: 400;
+        }
+
+        /* Continue in next part... */
+        
+        /* Venue section */
+        .venue-section {
+            padding: 7rem 2rem;
+            background: 
+                linear-gradient(135deg, 
+                    white 0%, 
+                    var(--light-cream) 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .venue-section::before {
+            content: '🕉';
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            transform: translateY(-50%);
+            font-size: 18rem;
+            opacity: 0.04;
+        }
+
+        .venue-section::after {
+            content: '🕉';
+            position: absolute;
+            top: 50%;
+            right: 8%;
+            transform: translateY(-50%);
+            font-size: 18rem;
+            opacity: 0.04;
+        }
+
+        .venue-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .venue-address {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--warm-brown);
+            margin-bottom: 3.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .map-btn {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                var(--dark-gold) 100%);
+            color: white;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 3px;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            border: none;
+            box-shadow: 0 10px 30px rgba(201, 169, 97, 0.4);
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+
+        .map-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(201, 169, 97, 0.6);
+            background: linear-gradient(135deg, 
+                var(--dark-gold) 0%, 
+                var(--primary-gold) 100%);
+        }
+
+        /* Food section - Rich Background */
+        .food-section {
+            padding: 7rem 2rem;
+            background: 
+                linear-gradient(135deg, 
+                    var(--deep-maroon) 0%, 
+                    var(--burgundy) 50%,
+                    var(--deep-maroon) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(201, 169, 97, 0.1) 0%, transparent 40%);
+            opacity: 0.8;
+        }
+
+        .food-section .section-title {
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                #FFD700 50%,
+                var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .food-intro {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            line-height: 2.2;
+            color: var(--light-cream);
+            position: relative;
+            font-weight: 400;
+        }
+
+        .food-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .food-card {
+            padding: 3.5rem 2.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(201, 169, 97, 0.4);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .food-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(201, 169, 97, 0.25) 0%, 
+                transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .food-card:hover::before {
+            opacity: 1;
+        }
+
+        .food-card:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: var(--primary-gold);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .food-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+        }
+
+        .food-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .food-card-desc {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--light-cream);
+            font-weight: 400;
+        }
+
+        /* Story/Timeline section */
+        .story-section {
+            padding: 7rem 2rem;
+            background: 
+                linear-gradient(135deg, 
+                    var(--light-cream) 0%, 
+                    var(--cream) 100%);
+            position: relative;
+        }
+
+        .story-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 40%, rgba(201, 169, 97, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 75% 60%, rgba(139, 38, 53, 0.06) 0%, transparent 50%);
+            opacity: 0.9;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, 
+                var(--primary-gold) 0%, 
+                var(--burgundy) 50%, 
+                var(--primary-gold) 100%);
+            box-shadow: 0 0 15px rgba(201, 169, 97, 0.5);
+        }
+
+        .timeline-item {
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: left;
+            padding-left: 5rem;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+            text-align: right;
+            padding-right: 5rem;
+        }
+
+        .timeline-content {
+            width: 50%;
+            position: relative;
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transition: all 0.4s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, 
+                var(--primary-gold) 0%, 
+                var(--dark-gold) 100%);
+            border-radius: 50%;
+            border: 6px solid var(--cream);
+            box-shadow: 
+                0 0 0 4px var(--burgundy),
+                0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 0;
+            font-size: 1.8rem;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .timeline-location {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .timeline-desc {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            line-height: 1.9;
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, 
+                var(--dark) 0%, 
+                #000 100%);
+            color: var(--light-cream);
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: 
+                repeating-linear-gradient(90deg,
+                    var(--deep-maroon) 0px,
+                    var(--deep-maroon) 20px,
+                    var(--primary-gold) 20px,
+                    var(--primary-gold) 40px,
+                    var(--deep-maroon) 40px,
+                    var(--deep-maroon) 60px);
+        }
+
+        footer p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            margin: 0.8rem 0;
+            font-weight: 400;
+        }
+
+        .footer-divider {
+            width: 250px;
+            height: 2px;
+            background: var(--primary-gold);
+            margin: 2rem auto;
+        }
+
+        .footer-om {
+            font-size: 2rem;
+            margin-top: 1.5rem;
+            filter: drop-shadow(0 2px 5px rgba(201, 169, 97, 0.5));
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .couple-container {
+                grid-template-columns: 1fr;
+                max-width: min(480px, 100%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .couple-section {
+                padding-top: 4.5rem;
+                padding-bottom: 4.5rem;
+            }
+
+            .couple-name {
+                font-size: clamp(2rem, 8vw, 3.2rem);
+            }
+
+            .couple-names {
+                font-size: 4rem;
+            }
+
+            .ampersand {
+                font-size: 3rem;
+                margin: 0 1rem;
+            }
+
+            .welcome-text {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: calc(100% - 90px);
+                margin-left: 90px;
+                margin-right: 0;
+                text-align: left;
+                padding: 2.5rem 2rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .gopuram-left, .gopuram-right {
+                display: none;
+            }
+
+            .peacock-left, .peacock-right {
+                font-size: 6rem;
+                width: 100px;
+                height: 100px;
+                bottom: 50px;
+            }
+
+            .peacock-left {
+                left: 20px;
+            }
+
+            .peacock-right {
+                right: 20px;
+            }
+
+            .floral-pillar {
+                width: 80px;
+            }
+
+            .ganesha-top {
+                font-size: 3.5rem;
+                top: 60px;
+            }
+
+            .om-symbol {
+                font-size: 3.5rem;
+            }
+
+            .om-welcome {
+                font-size: 3.5rem;
+            }
+
+            .floral-arch {
+                width: 350px;
+                height: 120px;
+            }
+        }
+
+        /* Scroll animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Curtain Animation -->
+    <div class="curtain-container" id="curtainContainer">
+        <div class="curtain curtain-left">
+            <div class="curtain-tassel"></div>
         </div>
-      </div>
-    </nav>
-
-    <section id="home" class="home">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 text-center">
-            <h2>Our Wedding</h2>
-            <h3>Sunday, 12 April 2026 &mdash; Rangas Mahal, Coimbatore</h3>
-            <p>We would be honoured to have you with us as we begin our journey together.</p>
-          </div>
+        <div class="curtain curtain-right">
+            <div class="curtain-tassel"></div>
         </div>
+    </div>
 
-        <div class="row couple justify-content-center">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="row align-items-center justify-content-center">
-              <div class="col-12 col-lg-8 text-center text-lg-end order-2 order-lg-1">
-                <h3>S. Aravindhan</h3>
-                <p class="small text-muted mb-1">M.Sc.</p>
-                <p>Son of <strong>Mr. N. Sakthivel</strong> &amp; <strong>Mrs. S. Lalitha</strong>, M.Sc., B.Ed.</p>
-                <p>
-                  Vagarayanpalayam <br />
-                  &mdash; <br />
-                  Coimbatore
-                </p>
-              </div>
-              <div class="col-12 col-lg-4 text-center order-1 order-lg-2 mb-3 mb-lg-0">
-                <img src="img/couple.jpg" alt="Aravindhan" class="img-fluid rounded-circle couple-portrait mx-auto" />
-              </div>
+    <!-- Welcome Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="om-welcome">🕉</div>
+        <h1 class="welcome-text">VANAKKAM</h1>
+        <p class="welcome-subtitle">Join us in celebrating the sacred union of<br><strong>Aravindhan & Nimisha</strong></p>
+        <button class="open-invitation-btn" id="openBtn">OPEN INVITATION</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="gopuram-left"></div>
+            <div class="gopuram-right"></div>
+            <div class="kolam-mandala"></div>
+            <div class="ganesha-top">🐘</div>
+            <div class="floral-arch"></div>
+            <div class="floral-pillar left"></div>
+            <div class="floral-pillar right"></div>
+            <div class="peacock-left">🦚</div>
+            <div class="peacock-right">🦚</div>
+            
+            <div class="hero-content">
+                <div class="om-symbol fade-in">🕉</div>
+                <p class="invitation-header fade-in">Together with their families</p>
+                <h1 class="couple-names fade-in">
+                    Aravindhan <span class="ampersand">&</span> Nimisha
+                </h1>
+                <div class="divider fade-in"></div>
+                <p class="wedding-date fade-in">Sunday, 12th April 2026</p>
+                <p class="wedding-venue fade-in">RANGAZ MAHAL • COIMBATORE</p>
             </div>
-          </div>
+        </section>
 
-          <span class="heart"><i class="bi bi-heart-fill"></i></span>
+        <!-- Couple Section -->
+        <section class="couple-section">
+            <div class="couple-container">
+                <div class="couple-card fade-in">
+                    <img src="img/couple.jpg" alt="Aravindhan" class="couple-image" width="560" height="560" decoding="async">
+                    <h2 class="couple-name">S. Aravindhan</h2>
+                    <p class="couple-degree">M.Sc.</p>
+                    <div class="couple-parents">
+                        Son of<br>
+                        <strong>Mr. N. Sakthivel</strong><br>
+                        & <strong>Mrs. S. Lalitha</strong>, M.Sc., B.Ed.
+                    </div>
+                    <p class="couple-location">Vagarayanpalayam, Coimbatore</p>
+                </div>
 
-          <div class="col-lg-6">
-            <div class="row align-items-center justify-content-center">
-              <div class="col-12 col-lg-4 text-center mb-3 mb-lg-0">
-                <img src="img/couple.jpg" alt="Nimisha" class="img-fluid rounded-circle couple-portrait mx-auto" />
-              </div>
-              <div class="col-12 col-lg-8 text-center text-lg-start">
-                <h3>D. Nimisha</h3>
-                <p class="small text-muted mb-1">B.Sc.</p>
-                <p>Daughter of <strong>Mr. S.K. Devanan</strong> &amp; <strong>Mrs. D. Amutha</strong></p>
-                <p>
-                  Sulur <br />
-                  &mdash; <br />
-                  Coimbatore
-                </p>
-              </div>
+                <div class="couple-card fade-in">
+                    <img src="img/couple.jpg" alt="Nimisha" class="couple-image" width="560" height="560" decoding="async">
+                    <h2 class="couple-name">D. Nimisha</h2>
+                    <p class="couple-degree">B.Sc.</p>
+                    <div class="couple-parents">
+                        Daughter of<br>
+                        <strong>Mr. S.K. Devanan</strong><br>
+                        & <strong>Mrs. D. Amutha</strong>
+                    </div>
+                    <p class="couple-location">Sulur, Coimbatore</p>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section id="info" class="info">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 col-10 text-center">
-            <h2>Event Information</h2>
-            <p class="alamat">
-              <strong>Rangas Mahal</strong><br />
-              Karumathampatti, Coimbatore, Tamil Nadu
+        <!-- Events Section -->
+        <section class="events-section">
+            <h2 class="section-title fade-in">Event Details</h2>
+            <div class="events-grid">
+                <div class="event-card fade-in">
+                    <div class="event-icon">🌙</div>
+                    <h3 class="event-title">Reception</h3>
+                    <p class="event-time">6:00 PM – 9:00 PM</p>
+                    <p class="event-date">Saturday, 11 April 2026</p>
+                    <p class="event-description">Dinner and celebrations at Rangaz Mahal — the evening before our wedding day.</p>
+                </div>
+
+                <div class="event-card fade-in">
+                    <div class="event-icon">🪷</div>
+                    <h3 class="event-title">Wedding</h3>
+                    <p class="event-time">6:00 AM</p>
+                    <p class="event-date">Sunday, 12 April 2026</p>
+                    <p class="event-description">We request your presence for the sacred rituals and blessings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue Section -->
+        <section class="venue-section fade-in">
+            <h2 class="section-title">Venue</h2>
+            <h3 class="venue-name">Rangaz Mahal</h3>
+            <p class="venue-address">Karumathampatti, Coimbatore, Tamil Nadu</p>
+            <a href="https://www.google.com/maps/search/Rangaz+Mahal+Karumathampatti+Coimbatore" target="_blank" class="map-btn">View on Google Maps</a>
+        </section>
+
+        <!-- Food Section -->
+        <section class="food-section">
+            <h2 class="section-title fade-in">Authentic Karaikudi Feast</h2>
+            <p class="food-intro fade-in">
+                Celebrate with us over the rich, aromatic tastes of Karaikudi — the heart of Chettinad cuisine. 
+                From slow-cooked kuzhambus and biryanis to crispy vadams, payasam, and filter coffee.
             </p>
-            <iframe
-              src="https://www.google.com/maps?q=Rangas+Mahal+Kaniyur+Coimbatore&output=embed"
-              width="100%"
-              height="250"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Rangas Mahal location"
-            ></iframe>
-            <a href="https://www.google.com/maps/search/Rangas+Mahal+Kaniyur+Coimbatore" target="_blank" rel="noopener noreferrer" class="btn btn-maps btn-sm my-3">Open in Google Maps</a>
-            <p class="description">
-              Wedding muhurtham is early morning. Please plan travel accordingly and reach the venue on time. If you need help with directions, call the families.
-            </p>
-          </div>
-        </div>
-
-        <div class="row justify-content-center mt-4">
-          <div class="col-md-5 col-10">
-            <div class="card info-card text-center mb-5">
-              <div class="card-header">Wedding Ceremony</div>
-              <div class="card-body">
-                <div class="row justify-content-center">
-                  <div class="col-md-6">
-                    <i class="bi bi-clock d-block"></i>
-                    <span>6:00 AM</span>
-                  </div>
-                  <div class="col-md-6">
-                    <i class="bi bi-calendar3 d-block"></i>
-                    <span>Sunday, 12 April 2026</span>
-                  </div>
+            <div class="food-grid">
+                <div class="food-card fade-in">
+                    <div class="food-icon">🌶️</div>
+                    <h3 class="food-card-title">Chettinad Spices</h3>
+                    <p class="food-card-desc">Star anise, marathi moggu, and stone-ground masalas — the signature depth of Karaikudi kitchens.</p>
                 </div>
-              </div>
-              <div class="card-footer">We request your presence for the sacred rituals and blessings.</div>
-            </div>
-          </div>
-          <div class="col-md-5 col-10">
-            <div class="card info-card text-center">
-              <div class="card-header">RECEPTION</div>
-              <div class="card-body">
-                <div class="row justify-content-center">
-                  <div class="col-md-6">
-                    <i class="bi bi-clock d-block"></i>
-                    <span>6:00 PM &ndash; 9:00 PM</span>
-                  </div>
-                  <div class="col-md-6">
-                    <i class="bi bi-calendar3 d-block"></i>
-                    <span>Saturday, 11 April 2026</span>
-                  </div>
+
+                <div class="food-card fade-in">
+                    <div class="food-icon">🍛</div>
+                    <h3 class="food-card-title">Feast & Sweets</h3>
+                    <p class="food-card-desc">Traditional rice, gravies, poriyals, appalams, and homestyle payasam to end on a sweet note.</p>
                 </div>
-              </div>
-              <div class="card-footer">Dinner and celebrations at Rangas Mahal &mdash; the evening before our wedding day.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="feast" class="feast">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-9 col-11 text-center feast-intro">
-            <span>Come hungry</span>
-            <h2>Enjoy authentic Karaikudi flavours</h2>
-            <p class="feast-lead">
-              Celebrate with us over the rich, aromatic tastes of <strong>Karaikudi</strong> &mdash; the heart of <strong>Chettinad</strong> cuisine. From slow-cooked kuzhambus and biryanis to crispy vadams, payasam, and filter coffee, we want you to feel the warmth of a true Tamil wedding feast.
-            </p>
-          </div>
-        </div>
-
-        <div class="row g-4 justify-content-center feast-grid">
-          <div class="col-sm-6 col-lg-3">
-            <div class="feast-card h-100 text-center">
-              <i class="bi bi-fire" aria-hidden="true"></i>
-              <h3>Chettinad spices</h3>
-              <p>Star anise, marathi moggu, and stone-ground masalas &mdash; the signature depth of Karaikudi kitchens.</p>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="feast-card h-100 text-center">
-              <i class="bi bi-cup-hot" aria-hidden="true"></i>
-              <h3>Feast &amp; sweets</h3>
-              <p>Traditional rice, gravies, poriyals, appalams, and homestyle payasam to end on a sweet note.</p>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="feast-card h-100 text-center">
-              <i class="bi bi-flower1" aria-hidden="true"></i>
-              <h3>Served with love</h3>
-              <p>Prepared and served the way our families would host you at home &mdash; generous, festive, and full of care.</p>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="feast-card h-100 text-center">
-              <i class="bi bi-heart-fill" aria-hidden="true"></i>
-              <h3>Reception dinner</h3>
-              <p>Join us the evening before the wedding for dinner at Rangas Mahal &mdash; the perfect time to savour these flavours together.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="story" class="story">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 col-10 text-center">
-            <span>How Our Love Bloomed</span>
-            <h2>Our Story</h2>
-            <p>From Coimbatore lanes to one shared future &mdash; friendship grew into love, and love into a promise for life.</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <ul class="timeline">
-              <li>
-                <div class="timeline-image" style="background-image: url(https://picsum.photos/seed/an1/302/302)"></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h3>First meeting</h3>
-                    <span>Coimbatore</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>We met through family and friends, and conversations turned into a bond we both treasured.</p>
-                  </div>
+                <div class="food-card fade-in">
+                    <div class="food-icon">❤️</div>
+                    <h3 class="food-card-title">Served with Love</h3>
+                    <p class="food-card-desc">Prepared and served the way our families would host you at home — generous, festive, and full of care.</p>
                 </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image" style="background-image: url(https://picsum.photos/seed/an2/300/300)"></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h3>Together</h3>
-                    <span>Our journey</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Every outing, every festival, and every small moment reminded us we were meant to walk this path together.</p>
-                  </div>
+
+                <div class="food-card fade-in">
+                    <div class="food-icon">☕</div>
+                    <h3 class="food-card-title">Filter Coffee</h3>
+                    <p class="food-card-desc">Aromatic South Indian filter coffee to complete the authentic Tamil dining experience.</p>
                 </div>
-              </li>
-              <li>
-                <div class="timeline-image" style="background-image: url(https://picsum.photos/seed/an3/301/301)"></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h3>The wedding</h3>
-                    <span>12 April 2026</span>
-                  </div>
-                  <div class="timeline-body">With our parents&rsquo; blessings, we can&rsquo;t wait to celebrate with everyone we love.</div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section">
+            <h2 class="section-title fade-in">Our Story</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">
+                        <div class="timeline-icon">💫</div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">First Meeting</h3>
+                        <p class="timeline-location">Coimbatore</p>
+                        <p class="timeline-desc">We met through family and friends, and conversations turned into a bond we both treasured.</p>
+                    </div>
                 </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col text-center">
-            <small class="block">&copy; 2026 Aravindhan &amp; Nimisha. All rights reserved.</small>
-            <small class="block">With love from Coimbatore</small>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">
+                        <div class="timeline-icon">💝</div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Together</h3>
+                        <p class="timeline-location">Our Journey</p>
+                        <p class="timeline-desc">Every outing, every festival, and every small moment reminded us we were meant to walk this path together.</p>
+                    </div>
+                </div>
 
-            <ul class="mt-3">
-              <li>
-                <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-              </li>
-              <li>
-                <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-              </li>
-              <li>
-                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">
+                        <div class="timeline-icon">💍</div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">The Wedding</h3>
+                        <p class="timeline-location">12 April 2026</p>
+                        <p class="timeline-desc">With our parents' blessings, we can't wait to celebrate with everyone we love.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 Aravindhan & Nimisha</p>
+            <div class="footer-divider"></div>
+            <p>With love from Coimbatore</p>
+            <div class="footer-om">🕉</div>
+        </footer>
+    </div>
 
     <script>
-      simplyCountdown(".simply-countdown", {
-        year: 2026,
-        month: 4,
-        day: 12,
-        hours: 6,
-        minutes: 0,
-        seconds: 0,
-        words: {
-          days: { singular: "day", plural: "days" },
-          hours: { singular: "hour", plural: "hours" },
-          minutes: { singular: "minute", plural: "minutes" },
-          seconds: { singular: "second", plural: "seconds" },
-        },
-        plural: true,
-      });
-    </script>
+        // Curtain opening animation
+        const openBtn = document.getElementById('openBtn');
+        const curtainContainer = document.getElementById('curtainContainer');
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const mainContent = document.getElementById('mainContent');
 
-    <script>
-      document.querySelectorAll("#mainNav .nav-link").forEach(function (link) {
-        link.addEventListener("click", function () {
-          var nav = document.getElementById("mainNav");
-          if (window.getComputedStyle(document.querySelector(".navbar-toggler")).display !== "none" && nav.classList.contains("show")) {
-            bootstrap.Collapse.getOrCreateInstance(nav).hide();
-          }
+        openBtn.addEventListener('click', () => {
+            // Disable button
+            openBtn.disabled = true;
+            openBtn.style.opacity = '0.6';
+            
+            // Open curtains
+            curtainContainer.classList.add('opened');
+            curtainContainer.classList.add('active');
+            
+            // Hide welcome overlay
+            setTimeout(() => {
+                welcomeOverlay.classList.add('hidden');
+            }, 2000);
+
+            // Show main content
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+            }, 3000);
+
+            // Trigger scroll animations
+            setTimeout(() => {
+                observeElements();
+            }, 3500);
         });
-      });
+
+        // Scroll animation observer
+        function observeElements() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
-
-    <script>
-      const rootElement = document.documentElement;
-
-      function disableScroll() {
-        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-        window.onscroll = function () {
-          window.scrollTo(scrollTop, scrollLeft);
-        };
-        rootElement.style.scrollBehavior = "auto";
-      }
-
-      function enableScroll() {
-        window.onscroll = function () {};
-        rootElement.style.scrollBehavior = "smooth";
-      }
-
-      disableScroll();
-    </script>
-  </body>
+</body>
 </html>
