@@ -1,18 +1,26 @@
 .simply-countdown {
-  overflow: hidden;
-  display: table;
-  font-family: "Arial", sans-serif;
-  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0.25rem;
+  box-sizing: border-box;
+  font-family: "Work Sans", "Arial", sans-serif;
 }
 .simply-countdown > .simply-section {
   width: 50px;
   height: 50px;
-  padding: 80px;
+  padding: clamp(1.75rem, 12vw, 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  float: left;
-  margin: 10px;
+  flex: 0 0 auto;
+  margin: 0;
   background: linear-gradient(145deg, var(--pink) 0%, #72203d 100%);
   box-shadow: 0 4px 14px rgba(139, 34, 66, 0.25);
   border-radius: 50%;
