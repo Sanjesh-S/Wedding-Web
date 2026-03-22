@@ -1055,6 +1055,23 @@ body.page-home.curtain-open .stage-shell {
     line-height: 1.55;
 }
 
+.wedding-feast__note-tel {
+    font-style: normal;
+    font-weight: 600;
+    color: #5a3d28;
+    text-decoration: underline;
+    text-decoration-color: rgba(201, 162, 39, 0.55);
+    text-underline-offset: 0.12em;
+    white-space: nowrap;
+}
+
+.wedding-feast__note-tel:hover,
+.wedding-feast__note-tel:focus-visible {
+    color: var(--page-sage);
+    text-decoration-color: rgba(201, 162, 39, 0.85);
+    opacity: 1;
+}
+
 /* Where we celebrate — venue, map, sage / gold */
 .venue-section__shell {
     position: relative;
