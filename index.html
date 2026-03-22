@@ -2,1074 +2,459 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aravindhan & Nimisha - Wedding Invitation</title>
-    <!-- Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Aravindhan &amp; Nimisha — Wedding</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Leaflet Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden; 
-            background: #000;
-        }
-
-        /* --- Calligraphy Preloader --- */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #050505;
-            z-index: 99999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: opacity 1s ease;
-        }
-        .preloader-monogram {
-            font-family: 'Cinzel', serif;
-            font-size: 5rem; color: #d4af37;
-            background: linear-gradient(45deg, #d4af37, #fce8b2, #d4af37);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-        @keyframes pulse-glow {
-            0% { opacity: 0.6; filter: drop-shadow(0 0 5px rgba(212,175,55,0.2)); }
-            50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(212,175,55,0.8)); }
-            100% { opacity: 0.6; filter: drop-shadow(0 0 5px rgba(212,175,55,0.2)); }
-        }
-
-        /* Top Navigation for switching designs */
-        .style-switcher {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            padding: 1rem;
-            display: flex; justify-content: center; gap: 1rem;
-            z-index: 10000;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-            pointer-events: auto;
-        }
-
-        .switch-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .switch-btn:hover, .switch-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: #fff;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-        }
-
-        /* Design Containers */
-        .design-container {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.8s ease;
-            overflow-y: auto; overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        .design-container.active {
-            opacity: 1; pointer-events: auto;
-        }
-
-        /* 3D Canvas Background */
-        .webgl-canvas {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100vh;
-            z-index: 0; pointer-events: none;
-        }
-
-        /* Content Overlay Base */
-        .content-wrapper {
-            position: relative; z-index: 10;
-            width: 100%; display: flex; flex-direction: column; align-items: center;
-            opacity: 0; transform: translateY(50px);
-            transition: opacity 2s ease 0.5s, transform 2s ease 0.5s;
-        }
-
-        .unlocked ~ .content-wrapper, .unlocked + .webgl-canvas + .content-wrapper, .d2-hook.unlocked ~ .webgl-canvas + .content-wrapper {
-            opacity: 1; transform: translateY(0);
-        }
-
-        .unlocked-scroll { overflow-y: auto !important; }
-
-        /* Common Info Styles */
-        .parents-info {
-            display: flex; justify-content: center; gap: 4rem; margin-top: 2rem; flex-wrap: wrap;
-        }
-        .parent-side { text-align: center; flex: 1; min-width: 250px; }
-        .parent-side h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 600; }
-        .parent-side p { font-size: 1rem; line-height: 1.6; opacity: 0.8; }
-        
-        .events-grid {
-            display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;
-        }
-        .event-card {
-            flex: 1; min-width: 250px; padding: 2rem; border-radius: 10px; text-align: center;
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .event-card h3 { font-size: 1.8rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
-        
-        .calendar-btn {
-            display: inline-block; margin-top: 0.8rem; font-size: 0.85rem; text-decoration: none; 
-            border-bottom: 1px dashed currentColor; padding-bottom: 2px; transition: 0.3s; opacity: 0.7;
-        }
-        .calendar-btn:hover { opacity: 1; border-color: transparent; }
-
-        .venue-info {
-            text-align: center; font-size: 1.2rem; line-height: 1.8;
-            padding: 1.5rem; border-radius: 10px; margin-top: 1rem; width: 100%;
-        }
-
-        .feast-highlight {
-            font-size: 2.2rem; text-align: center; padding: 3rem;
-            border-radius: 15px; margin: 2rem 0; line-height: 1.5;
-        }
-
-        .couple-image {
-            width: 100%; max-width: 700px; height: auto;
-            border-radius: 10px; display: block;
-        }
-
-        /* ==================== DESIGN 1: COSMIC PHYSICS ==================== */
-        #d1 { color: #fff; font-family: 'Montserrat', sans-serif; }
-        #d1 .content-wrapper { padding-top: 15vh; }
-        
-        /* D1 Expanding Hook Transition */
-        .d1-hook {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 50; display: flex; align-items: center; justify-content: center;
-            transition: transform 2s ease, opacity 2s ease, filter 2s ease;
-            pointer-events: auto;
-        }
-        .d1-hook.unlocked {
-            transform: scale(2); opacity: 0; filter: blur(20px); pointer-events: none;
-        }
-        
-        #d1 .hook-btn {
-            background: transparent; border: 2px solid rgba(0, 212, 255, 0.5); color: #00d4ff;
-            padding: 1.5rem 4rem; font-size: 1.2rem; font-family: 'Orbitron', sans-serif;
-            letter-spacing: 5px; text-transform: uppercase; border-radius: 5px; cursor: pointer;
-            box-shadow: 0 0 30px rgba(0,212,255,0.2), inset 0 0 20px rgba(0,212,255,0.1);
-            transition: all 0.4s ease; backdrop-filter: blur(5px);
-        }
-        #d1 .hook-btn:hover { box-shadow: 0 0 50px rgba(0,212,255,0.6), inset 0 0 30px rgba(0,212,255,0.4); border-color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
-
-        #d1 .glass-panel {
-            background: rgba(10, 15, 30, 0.5); backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px;
-            padding: 4rem; margin: 2rem 1rem; max-width: 1000px; width: 100%;
-            text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        #d1 h1 {
-            font-family: 'Cinzel', serif; font-size: clamp(3rem, 6vw, 5rem);
-            background: linear-gradient(135deg, #fff, #00d4ff, #ff00ff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem;
-        }
-        #d1 .event-card { background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); }
-        #d1 .calendar-btn { color: #00d4ff; }
-        #d1 .venue-info { background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); }
-        #d1 .map-btn { color: #ffd700; border-color: rgba(255,215,0,0.5); border-radius: 30px; margin-top: 1rem; transition: 0.3s; padding: 0.5rem 1.5rem; text-decoration:none; display:inline-block; }
-        #d1 .map-btn:hover { background: rgba(255,215,0,0.2); }
-        #d1 .feast-highlight { background: rgba(255, 0, 255, 0.05); border: 1px solid rgba(255, 0, 255, 0.3); font-family: 'Cinzel', serif; color: #ff99ff; }
-
-        /* ==================== DESIGN 2: ROYAL GOLD SILK ==================== */
-        #d2 { color: #fce8b2; font-family: 'Playfair Display', serif; }
-        #d2 .content-wrapper { padding-top: 15vh; }
-        
-        /* D2 Curtain Opening Hook Transition */
-        .d2-hook {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 50; display: flex; align-items: center; justify-content: center; pointer-events: none;
-        }
-        .d2-curtain {
-            position: absolute; top: 0; width: 50%; height: 100%; background: #1a0000;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.05) 10px, rgba(212, 175, 55, 0.05) 20px);
-            transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1); pointer-events: auto; z-index: 1;
-        }
-        .d2-left-curtain { left: 0; border-right: 2px solid #d4af37; transform-origin: left; }
-        .d2-right-curtain { right: 0; border-left: 2px solid #d4af37; transform-origin: right; }
-        .d2-hook-content { position: relative; z-index: 2; pointer-events: auto; transition: opacity 0.8s ease; }
-        
-        .d2-hook.unlocked .d2-left-curtain { transform: translateX(-100%); pointer-events: none;}
-        .d2-hook.unlocked .d2-right-curtain { transform: translateX(100%); pointer-events: none;}
-        .d2-hook.unlocked .d2-hook-content { opacity: 0; pointer-events: none; }
-
-        #d2 .hook-btn {
-            background: transparent; border: 2px solid #d4af37; color: #d4af37;
-            padding: 1.5rem 4rem; font-size: 1.5rem; font-family: 'Cinzel', serif;
-            letter-spacing: 3px; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); transition: all 0.5s ease;
-        }
-        #d2 .hook-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent); transition: left 0.5s ease;
-        }
-        #d2 .hook-btn:hover::before { left: 100%; }
-        #d2 .hook-btn:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 40px rgba(212, 175, 55, 0.5); color: #fff; }
-
-        #d2 .glass-panel {
-            background: rgba(40, 0, 0, 0.7); backdrop-filter: blur(10px);
-            border: 2px solid #d4af37; border-radius: 10px; padding: 4rem; margin: 2rem 1rem; max-width: 1000px; width: 100%;
-            text-align: center; box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.8);
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.03) 10px, rgba(212, 175, 55, 0.03) 20px);
-        }
-        #d2 h1 { font-family: 'Cinzel', serif; font-size: clamp(3rem, 6vw, 5rem); color: #d4af37; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); margin-bottom: 2rem; font-weight: 700; }
-        #d2 h3 { color: #d4af37; }
-        #d2 .event-card { border: 1px dashed #d4af37; background: rgba(0,0,0,0.3); }
-        #d2 .calendar-btn { color: #fce8b2; }
-        #d2 .venue-info { border: 1px solid #d4af37; background: rgba(0,0,0,0.4); }
-        #d2 .map-btn { color: #d4af37; border-color: rgba(212, 175, 55, 0.5); padding: 0.5rem 1.5rem; text-decoration:none; display:inline-block; border-radius:0; border: 1px dashed #d4af37; margin-top:1rem; transition:0.3s;}
-        #d2 .map-btn:hover { background: rgba(212, 175, 55, 0.2); color:#fff; }
-        #d2 .feast-highlight { border: 2px solid #d4af37; background: rgba(212, 175, 55, 0.1); font-family: 'Cinzel', serif; }
-
-        /* ==================== DESIGN 3: CRYSTAL GLASS ==================== */
-        #d3 { color: #333; font-family: 'Montserrat', sans-serif; }
-        #d3 .content-wrapper { padding-top: 15vh; }
-
-        /* D3 Vertical Wipe Wipeout Hook Transition */
-        .d3-hook {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 50; display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            transition: clip-path 1.5s cubic-bezier(0.7,0,0.3,1), opacity 1.5s ease;
-            clip-path: inset(0 0 0 0); pointer-events: auto;
-        }
-        .d3-hook.unlocked { clip-path: inset(0 0 100% 0); opacity: 0; pointer-events: none; }
-
-        #d3 .hook-btn {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.5); color: #fff; 
-            padding: 1.5rem 5rem; font-size: 1rem; font-weight: 300; letter-spacing: 8px; text-transform: uppercase;
-            cursor: pointer; border-radius: 50px; backdrop-filter: blur(10px); transition: all 0.5s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); mix-blend-mode: difference;
-        }
-        #d3 .hook-btn:hover { background: rgba(255, 255, 255, 0.3); border-color: #fff; transform: scale(1.05); letter-spacing: 12px; }
-
-        #d3 .glass-panel {
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 30px;
-            padding: 4rem; margin: 2rem 1rem; max-width: 1000px; width: 100%;
-            text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.05);
-        }
-        #d3 h1 { font-family: 'Montserrat', sans-serif; font-weight: 200; font-size: clamp(3rem, 6vw, 5rem); color: #111; letter-spacing: -2px; margin-bottom: 2rem; }
-        #d3 h2 { font-weight: 300; letter-spacing: 4px; color: #555; }
-        #d3 .event-card { background: rgba(255,255,255,0.5); border: 1px solid #ddd; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        #d3 .calendar-btn { color: #555; }
-        #d3 .venue-info { background: #fff; border: 1px solid #eee; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
-        #d3 .map-btn { color: #111; border: 1px solid #ccc; padding: 0.5rem 1.5rem; text-decoration:none; display:inline-block; border-radius:30px; margin-top:1rem; transition:0.3s;}
-        #d3 .map-btn:hover { background: #111; color: #fff; }
-        #d3 .feast-highlight { background: linear-gradient(135deg, #f0f2f5, #fff); border: 1px solid #ddd; font-weight: 300; letter-spacing: 2px;}
-        #d3 .contact-btn { color: #111; border-color: #111; }
-        #d3 .contact-btn:hover { background: #111; color: #fff; }
-
-        /* Shared Components */
-        .section-title { margin-bottom: 2rem; font-size: 2.5rem; text-transform: uppercase; }
-        .image-placeholder {
-            width: 100%; border: 1px solid transparent; display: flex; align-items: center; justify-content: center;
-            border-radius: 10px; margin: 2rem 0; opacity: 0.9; transition: 0.3s; overflow: hidden;
-        }
-        .image-placeholder:hover { opacity: 1; transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        
-        .countdown { display: flex; justify-content: center; gap: 2rem; margin: 2rem 0;}
-        .time-box { text-align: center; }
-        .time-val { font-size: 3rem; font-weight: 700; }
-        .time-lbl { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;}
-        
-        .contact-btn {
-            display: inline-block; margin-top: 2rem; padding: 1rem 3rem; border: 1px solid currentColor;
-            border-radius: 30px; color: currentColor; text-decoration: none; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.3s; font-size: 1.2rem; cursor: pointer;
-        }
-        .contact-btn:hover { transform: scale(1.05); background: currentColor; }
-        #d1 .contact-btn:hover { color: #000; }
-        #d2 .contact-btn:hover { color: #280000; }
-
-        /* Fixed Golden Monogram */
-        .golden-monogram {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: #d4af37;
-            text-shadow: 0 0 12px rgba(212,175,55,0.9), 0 0 30px rgba(212,175,55,0.4);
-            pointer-events: none;
-            z-index: 10001;
-            letter-spacing: 3px;
-            font-style: italic;
-        }
-
-        /* === DESIGN 4: SOUTH INDIAN PHYSICS === */
-        .d4-hook {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 50;
-            display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(ellipse at center, rgba(80,10,10,0.95) 0%, rgba(20,5,0,0.98) 100%);
-            transition: opacity 1.8s ease, transform 1.8s ease;
-            pointer-events: auto;
-        }
-        .d4-hook.unlocked { opacity: 0; pointer-events: none; transform: scale(1.1); }
-        #d4 .hook-btn {
-            background: linear-gradient(135deg, #b8860b, #d4af37, #b8860b);
-            border: none; color: #1a0000;
-            padding: 1.2rem 4rem; font-size: 1rem; font-weight: 700;
-            letter-spacing: 5px; text-transform: uppercase;
-            cursor: pointer; border-radius: 50px;
-            box-shadow: 0 0 30px rgba(212,175,55,0.7);
-            font-family: 'Cinzel', serif;
-            transition: all 0.4s ease;
-        }
-        #d4 .hook-btn:hover { transform: scale(1.06); box-shadow: 0 0 50px rgba(212,175,55,0.9); }
-        #d4 .glass-panel {
-            background: rgba(30,5,0,0.75);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 20px;
-            padding: 3rem 4rem; margin: 2rem 1rem; max-width: 1000px; width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(212,175,55,0.2);
-        }
-        #d4 h1 { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 6vw, 5rem); color: #d4af37; text-shadow: 0 0 20px rgba(212,175,55,0.5); margin-bottom: 2rem; }
-        #d4 h2 { font-family: 'Cinzel', serif; color: #fce8b2; font-weight: 400; margin-bottom: 1.5rem; }
-        #d4 p { color: #d4b896; line-height: 1.8; }
-        #d4 h3 { font-family: 'Cinzel', serif; color: #ffb400; font-size: 1.2rem; }
-        #d4 .event-card { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); }
-        #d4 .venue-info { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2); color: #d4b896; }
-        #d4 .calendar-btn { color: #d4af37; border: 1px solid #d4af37; }
-        #d4 .calendar-btn:hover { background: #d4af37; color: #1a0000; }
-        #d4 .feast-highlight { background: linear-gradient(135deg, rgba(180,30,0,0.3), rgba(212,175,55,0.1)); border: 1px solid rgba(212,175,55,0.3); color: #fce8b2; }
-        #d4 .section-title { color: #d4af37; }
-        #d4 .contact-btn { color: #d4af37; border-color: #d4af37; }
-        #d4 .contact-btn:hover { background: #d4af37; color: #1a0000; }
-        #d4 .map-container { border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; overflow: hidden; margin-top: 1rem; }
-
-        /* Leaflet map containers */
-        .leaflet-map { height: 300px; width: 100%; border-radius: 10px; z-index: 1; position: relative; }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .style-switcher { flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem; }
-            .switch-btn { padding: 0.5rem 0.8rem; font-size: 0.75rem; letter-spacing: 1px; }
-            .glass-panel { padding: 1.5rem 1rem !important; margin: 1rem 0.5rem !important; }
-            h1 { font-size: 2rem !important; }
-            .hook-btn { font-size: 0.85rem; padding: 0.8rem 2rem; letter-spacing: 3px; }
-            .countdown { gap: 1rem; }
-            .time-val { font-size: 2rem; }
-            .events-grid { grid-template-columns: 1fr; }
-            .golden-monogram { font-size: 1.1rem; bottom: 0.8rem; right: 0.8rem; }
-            .parents-info { flex-direction: column; gap: 1.5rem; }
-        }
-
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="premium-shared.css">
+    <link rel="stylesheet" href="premium-designs.css">
 </head>
-<body>
+<body class="page-home">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <h1 class="preloader-monogram">A & N</h1>
+    <div id="splash" class="splash" role="dialog" aria-modal="true" aria-labelledby="splash-cta-label">
+        <div class="splash__bg" aria-hidden="true"></div>
+
+        <button type="button" class="splash__cta" id="splash-cta" aria-labelledby="splash-cta-label">
+            <span class="splash__cta-ring" aria-hidden="true">
+                <svg class="splash__cta-botanics" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="splashLeafGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a67c2a"/>
+                            <stop offset="50%" stop-color="#d4af37"/>
+                            <stop offset="100%" stop-color="#8b6914"/>
+                        </linearGradient>
+                    </defs>
+                    <g fill="none" stroke="url(#splashLeafGold)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" opacity="0.92">
+                        <path d="M52 118 Q38 102 32 82 Q28 68 36 58 Q44 52 52 62 Q48 78 56 92 Q62 104 70 108"/>
+                        <path d="M42 72 Q48 68 54 74 M38 88 Q46 84 52 90 M48 98 Q56 94 62 100"/>
+                        <ellipse cx="40" cy="66" rx="5" ry="9" transform="rotate(-35 40 66)"/>
+                        <ellipse cx="34" cy="86" rx="4" ry="7" transform="rotate(25 34 86)"/>
+                        <path d="M148 132 Q162 118 168 98 Q172 84 164 76 Q156 72 150 82 Q154 96 148 110 Q142 124 134 128"/>
+                        <path d="M158 88 Q152 84 146 90 M164 104 Q156 100 150 106 M156 116 Q148 112 142 118"/>
+                        <ellipse cx="162" cy="80" rx="5" ry="9" transform="rotate(40 162 80)"/>
+                        <ellipse cx="168" cy="100" rx="4" ry="7" transform="rotate(-28 168 100)"/>
+                        <path d="M72 168 Q88 162 100 158 Q118 152 132 158" opacity="0.75"/>
+                    </g>
+                </svg>
+                <span class="splash__cta-disk">
+                    <span class="splash__cta-monogram" aria-hidden="true">
+                        <span class="splash__cta-script splash__cta-script--a">A</span><span class="splash__cta-amp">&amp;</span><span class="splash__cta-script splash__cta-script--n">N</span>
+                    </span>
+                </span>
+            </span>
+            <span class="splash__cta-text" id="splash-cta-label">Tap to continue</span>
+        </button>
     </div>
-    <!-- Fixed Golden Monogram -->
-    <div class="golden-monogram">A &amp; N</div>
 
-    <!-- Navigation -->
-    <nav class="style-switcher">
-        <button class="switch-btn active" onclick="switchDesign(1)">1. Cosmic</button>
-        <button class="switch-btn" onclick="switchDesign(2)">2. Royal Silk</button>
-        <button class="switch-btn" onclick="switchDesign(3)">3. Crystal</button>
-        <button class="switch-btn" onclick="switchDesign(4)">4. South Indian Physics</button>
-    </nav>
-
-    <!-- ========================================== -->
-    <!-- DESIGN 1: COSMIC PHYSICS -->
-    <!-- ========================================== -->
-    <div id="d1" class="design-container active">
-        <canvas id="canvas-d1" class="webgl-canvas"></canvas>
-        <div class="d1-hook" id="hook-d1">
-            <div style="text-align:center; position:relative; z-index:2;">
-                <p style="font-family:'Cinzel',serif;color:#fff;font-size:1.5rem;opacity:0.8;margin-bottom:1rem;text-transform:uppercase;letter-spacing:10px;">Aravindhan & Nimisha</p>
-                <h2 style="font-family:'Cinzel',serif;color:#00d4ff;font-size:clamp(2rem, 4vw, 3.5rem);margin-bottom:3rem;text-shadow:0 0 20px #00d4ff;font-weight:700;">A Love Written in the Stars</h2>
-                <button class="hook-btn" onclick="unlockDesign(1)">Open Universe</button>
+    <div class="site-wrap">
+        <div class="theater-curtains" aria-hidden="true">
+            <div class="theater-curtains__panel theater-curtains__panel--left">
+                <div class="theater-curtains__fabric"></div>
+                <div class="theater-curtains__leaves">
+                    <svg viewBox="0 0 100 360" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="bananaLeafL" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#0f2918"/>
+                                <stop offset="40%" stop-color="#1b4332"/>
+                                <stop offset="100%" stop-color="#2d6a4f"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#bananaLeafL)" d="M98 0 Q22 100 6 180 Q-2 260 18 360h82V0z" opacity="0.95"/>
+                        <path fill="#1b4332" d="M100 40 Q48 130 32 220 L100 280V40z" opacity="0.5"/>
+                        <path fill="none" stroke="#95d5b2" stroke-width="0.7" opacity="0.45" d="M82 24 Q38 160 52 320"/>
+                        <path fill="none" stroke="#b7e4c7" stroke-width="0.5" opacity="0.35" d="M70 60 Q30 180 45 300"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="theater-curtains__panel theater-curtains__panel--right">
+                <div class="theater-curtains__fabric"></div>
+                <div class="theater-curtains__leaves theater-curtains__leaves--mirror">
+                    <svg viewBox="0 0 100 360" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="bananaLeafR" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#0f2918"/>
+                                <stop offset="40%" stop-color="#1b4332"/>
+                                <stop offset="100%" stop-color="#2d6a4f"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#bananaLeafR)" d="M98 0 Q22 100 6 180 Q-2 260 18 360h82V0z" opacity="0.95"/>
+                        <path fill="#1b4332" d="M100 40 Q48 130 32 220 L100 280V40z" opacity="0.5"/>
+                        <path fill="none" stroke="#95d5b2" stroke-width="0.7" opacity="0.45" d="M82 24 Q38 160 52 320"/>
+                        <path fill="none" stroke="#b7e4c7" stroke-width="0.5" opacity="0.35" d="M70 60 Q30 180 45 300"/>
+                    </svg>
+                </div>
             </div>
         </div>
 
-        <div class="content-wrapper">
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <p style="font-family: 'Orbitron', sans-serif; letter-spacing: 5px; color: #00d4ff; margin-bottom: 1rem;">TOGETHER FOREVER</p>
-                <h1>Aravindhan & Nimisha</h1>
-                
-                <div class="parents-info">
-                    <div class="parent-side">
-                        <h3 style="color:#00d4ff;">S. Aravindhan, M.Sc.</h3>
-                        <p>Son of<br>Mr. N. Sakthivel<br>& Mrs. S. Lalitha, M.Sc., B.Ed.</p>
+        <div class="stage-shell">
+            <header class="site-header site-header--theater">
+                <div class="site-header__inner">
+                    <a class="brand" href="index.html">A&amp;N</a>
+                    <nav aria-label="Primary">
+                        <ul class="site-nav">
+                            <li><a href="index.html" aria-current="page">Home</a></li>
+                            <li><a href="premium-details.html">Details</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <svg class="stage-corner-vine stage-corner-vine--left" viewBox="0 0 20 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="vineCornerL" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#8b6914"/>
+                        <stop offset="50%" stop-color="#d4af37"/>
+                        <stop offset="100%" stop-color="#a67c2a"/>
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="url(#vineCornerL)" stroke-width="0.85" d="M14 0 Q5 120 14 240 Q5 360 14 480 Q6 540 14 600"/>
+                <g fill="#c9a227" opacity="0.44">
+                    <ellipse cx="11" cy="36" rx="2.2" ry="3.6" transform="rotate(-25 11 36)"/>
+                    <ellipse cx="8" cy="140" rx="2" ry="3.2" transform="rotate(22 8 140)"/>
+                    <ellipse cx="12" cy="250" rx="2.2" ry="3.5" transform="rotate(-20 12 250)"/>
+                    <ellipse cx="9" cy="360" rx="2" ry="3.2" transform="rotate(24 9 360)"/>
+                    <ellipse cx="12" cy="470" rx="2.1" ry="3.4" transform="rotate(-22 12 470)"/>
+                </g>
+            </svg>
+            <svg class="stage-corner-vine stage-corner-vine--right" viewBox="0 0 20 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="vineCornerR" x1="1" y1="0" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#8b6914"/>
+                        <stop offset="50%" stop-color="#d4af37"/>
+                        <stop offset="100%" stop-color="#a67c2a"/>
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="url(#vineCornerR)" stroke-width="0.85" d="M6 0 Q15 120 6 240 Q15 360 6 480 Q14 540 6 600"/>
+                <g fill="#c9a227" opacity="0.44">
+                    <ellipse cx="9" cy="36" rx="2.2" ry="3.6" transform="rotate(25 9 36)"/>
+                    <ellipse cx="12" cy="140" rx="2" ry="3.2" transform="rotate(-22 12 140)"/>
+                    <ellipse cx="8" cy="250" rx="2.2" ry="3.5" transform="rotate(20 8 250)"/>
+                    <ellipse cx="11" cy="360" rx="2" ry="3.2" transform="rotate(-24 11 360)"/>
+                    <ellipse cx="8" cy="470" rx="2.1" ry="3.4" transform="rotate(22 8 470)"/>
+                </g>
+            </svg>
+
+            <main id="main" class="stage-main" tabindex="-1">
+                <section class="stage-invite" id="hero" aria-label="Invitation">
+                    <div class="stage-invite__canva-inner">
+                        <h1 class="visually-hidden">Wedding invitation — Aravindhan and Nimisha</h1>
+                        <!-- Tip: Export your Canva design as PNG and use <img src="img/your-invite.png" alt="…"> instead of this iframe to remove Canva’s bottom toolbar (trade-off: design won’t auto-update from Canva). -->
+                        <div class="canva-embed">
+                            <iframe
+                                class="canva-embed__iframe"
+                                title="Wedding invitation — Canva design"
+                                src="https://www.canva.com/design/DAHEq4g5NZc/u1YdVZXMRH_zg6Y0nGMN0A/view?embed"
+                                allowfullscreen="allowfullscreen"
+                                allow="fullscreen"
+                                loading="lazy"></iframe>
+                        </div>
+
+                        <div class="invite-below js-reveal" aria-labelledby="parents-blessings">
+                            <div class="invite-below__petals" aria-hidden="true"></div>
+                            <div class="invite-below__corners" aria-hidden="true"></div>
+                            <div class="invite-below__inner">
+                                <p id="parents-blessings" class="invite-below__blessings">With the heavenly blessings of</p>
+                                <div class="invite-below__parents">
+                                    <div class="invite-below__col">
+                                        <h2 class="invite-below__col-label">Groom’s parents</h2>
+                                        <p class="invite-below__name">Mr. N. Sakthivel</p>
+                                        <p class="invite-below__name">Mrs. S. Lalitha, M.Sc., B.Ed.</p>
+                                        <p class="invite-below__place">Vagarayanpalayam, Coimbatore</p>
+                                    </div>
+                                    <div class="invite-below__col">
+                                        <h2 class="invite-below__col-label">Bride’s parents</h2>
+                                        <p class="invite-below__name">Mr. S.K. Devanan</p>
+                                        <p class="invite-below__name">Mrs. D. Amutha</p>
+                                        <p class="invite-below__place">Sulur, Coimbatore</p>
+                                    </div>
+                                </div>
+
+                                <div class="invite-below__rule" aria-hidden="true">
+                                    <span class="invite-below__rule-line"></span>
+                                    <span class="invite-below__rule-diamond"></span>
+                                    <span class="invite-below__rule-line"></span>
+                                </div>
+
+                                <div class="invite-below__countdown">
+                                    <h2 class="invite-below__countdown-heading">Countdown</h2>
+                                    <p class="invite-below__until">Until 12 April 2026</p>
+                                    <div class="invite-below__timer" id="wedding-countdown">
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-days">0</span>
+                                            <span class="invite-below__unit-label">Days</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-hours">0</span>
+                                            <span class="invite-below__unit-label">Hours</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-minutes">0</span>
+                                            <span class="invite-below__unit-label">Minutes</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-seconds">0</span>
+                                            <span class="invite-below__unit-label">Seconds</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wedding-poster-block js-reveal" aria-labelledby="wedding-poster-heading">
+                            <div class="wedding-poster-block__intro">
+                                <h2 class="wedding-poster-block__eyebrow" id="wedding-poster-heading">Save the date</h2>
+                                <p class="wedding-poster-block__tagline">When two hearts become one… magic happens.</p>
+                                <p class="wedding-poster-block__meta">
+                                    <span class="wedding-poster-block__names">Aravindhan <span aria-hidden="true">&amp;</span> Nimisha</span>
+                                    <span class="wedding-poster-block__dot" aria-hidden="true">·</span>
+                                    <span class="wedding-poster-block__when">Sunday, 12 April 2026 · 6 AM</span>
+                                    <span class="wedding-poster-block__dot" aria-hidden="true">·</span>
+                                    <span class="wedding-poster-block__where">Rengaz Mahal, Karumathampatti, Coimbatore</span>
+                                </p>
+                            </div>
+                            <figure class="wedding-poster-block__figure">
+                                <img
+                                    class="wedding-poster-block__img"
+                                    src="img/wedding-save-the-date.png"
+                                    width="726"
+                                    height="1024"
+                                    loading="lazy"
+                                    decoding="async"
+                                    alt="Illustrated save the date for Aravindhan and Nimisha — Sunday 12 April 2026, wedding at Rengaz Mahal, Karumathampatti, Coimbatore." />
+                            </figure>
+                        </div>
                     </div>
-                    <div class="parent-side">
-                        <h3 style="color:#ff00ff;">D. Nimisha, B.Sc.</h3>
-                        <p>Daughter of<br>Mr. S.K. Devanan<br>& Mrs. D. Amutha<br>Sulur, Coimbatore.</p>
+                </section>
+
+                <section id="feast" class="section section--theater-below wedding-feast js-reveal" aria-labelledby="feast-heading">
+                    <div class="section__inner wedding-feast__inner">
+                        <h2 id="feast-heading" class="wedding-feast__title">Wedding feast</h2>
+                        <div class="wedding-feast__ornament" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 10" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round">
+                                <path d="M0 5h48M72 5h48" opacity="0.85" />
+                                <path d="M52 5h16" opacity="0.35" />
+                                <circle cx="60" cy="5" r="2.25" fill="currentColor" stroke="none" opacity="0.9" />
+                            </svg>
+                        </div>
+                        <p class="wedding-feast__accent">For our guests</p>
+                        <p class="wedding-feast__kicker">Chettinad tradition, heartfelt hosting</p>
+                        <p class="wedding-feast__lead">
+                            We’re honoured to welcome you into a day shaped by our families and our roots. Your presence is the
+                            greatest gift — and we can’t wait to celebrate alongside you.
+                        </p>
+                        <p class="wedding-feast__text">
+                            From the ceremony to every moment we share, we’ve planned this celebration with care so you can feel
+                            at ease, connect with loved ones, and take in the joy of the occasion.
+                        </p>
+                        <p class="wedding-feast__note">
+                            If you need any accommodations, please mention them to the hosts through your invitation.
+                        </p>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section class="glass-panel" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="section-title" style="font-family: 'Cinzel', serif;">The Celebration</h2>
-                <div class="events-grid">
-                    <div class="event-card">
-                        <h3 style="color: #00d4ff; font-family: 'Cinzel', serif;">Reception</h3>
-                        <p>Saturday, 11 April 2026<br>6:00 PM – 9:00 PM</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-11%2018%3A00&end=2026-04-11%2021%3A00&title=Grand%20Reception%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
+                <section id="venue" class="section section--theater-below venue-section js-reveal" aria-labelledby="venue-heading">
+                    <div class="venue-section__shell">
+                        <div class="venue-section__petals" aria-hidden="true"></div>
+                        <div class="venue-section__corners" aria-hidden="true"></div>
+                        <div class="venue-section__inner">
+                            <h2 id="venue-heading" class="venue-section__title">Where we celebrate</h2>
+                            <p class="venue-section__name">Rengaz Mahal</p>
+                            <p class="venue-section__event-label">Reception</p>
+                            <p class="venue-section__when">Saturday, 11 April 2026 · 6:00 PM – 9:00 PM</p>
+                            <p class="venue-section__address">Karumathampatti, Coimbatore</p>
+
+                            <div class="venue-section__map-shell">
+                                <a
+                                    class="venue-section__map-chip"
+                                    href="https://www.google.com/maps/search/?api=1&amp;query=Rengaz%20Mahal%2C%20Karumathampatti%2C%20Coimbatore"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="venue-section__map-chip-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path
+                                            fill="currentColor"
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                                    </svg>
+                                    Open in Maps
+                                </a>
+                                <div class="venue-section__map-frame">
+                                    <!-- Replace src with your “Share → Embed a map” code from Google Maps for a pinned venue -->
+                                    <iframe
+                                        class="venue-section__map"
+                                        title="Rengaz Mahal, Karumathampatti, Coimbatore — reception Saturday 11 April 2026, 6:00 PM to 9:00 PM"
+                                        src="https://www.google.com/maps?q=Rengaz+Mahal,+Karumathampatti,+Coimbatore,+Tamil+Nadu&amp;output=embed"
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                        allowfullscreen=""></iframe>
+                                </div>
+                            </div>
+
+                            <a
+                                class="venue-section__cta"
+                                href="https://www.google.com/maps/dir/?api=1&amp;destination=Rengaz+Mahal,+Karumathampatti,+Coimbatore,+Tamil+Nadu"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                <span class="venue-section__cta-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" focusable="false">
+                                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.75" />
+                                        <path fill="none" stroke="currentColor" stroke-width="1.75" d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                Open in Maps
+                            </a>
+                        </div>
                     </div>
-                    <div class="event-card">
-                        <h3 style="color: #ff00ff; font-family: 'Cinzel', serif;">Wedding</h3>
-                        <p>Sunday, 12 April 2026<br>6:00 AM Onwards</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-12%2006%3A00&end=2026-04-12%2012%3A00&title=Wedding%20Ceremony%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                </div>
-                <div class="venue-info">
-                    <strong style="color: #ffd700; letter-spacing: 2px;">VENUE</strong><br>
-                    Rangaz Mahal,<br>Karumathampatti, Coimbatore, Tamil Nadu
-                    <div id="map-d1" class="leaflet-map" style="margin-top:1.5rem;"></div>
-                </div>
-            </section>
+                </section>
+            </main>
 
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="section-title">Our Orbit</h2>
-                <div class="image-placeholder">
-                    <img src="img/couple.jpg" alt="Aravindhan & Nimisha" class="couple-image">
+            <footer class="site-footer site-footer--theater">
+                <div class="site-footer__inner">
+                    <p>With love — A&amp;N</p>
                 </div>
-            </section>
-
-            <section class="glass-panel" data-aos="flip-up" data-aos-duration="1000">
-                <div class="feast-highlight">
-                    <span style="font-size: 1.2rem; letter-spacing: 4px; font-weight: 300;">A CULINARY JOURNEY</span><br><br>
-                    Savor the traditional flavors of our<br>
-                    <span style="font-size: 3rem; background: linear-gradient(90deg, #ff00ff, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-top: 1rem;">Authentic Karaikudi Feast</span>
-                    <span style="font-size: 1rem; display: block; margin-top: 1.5rem; opacity: 0.8; font-family: 'Montserrat', sans-serif;">Prepared with love, heritage, and royal spices.</span>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 2rem;">
-                <h2 class="section-title">Liftoff In</h2>
-                <div class="countdown" id="cd-1">
-                    <div class="time-box"><div class="time-val d">0</div><div class="time-lbl">Days</div></div>
-                    <div class="time-box"><div class="time-val h">0</div><div class="time-lbl">Hrs</div></div>
-                    <div class="time-box"><div class="time-val m">0</div><div class="time-lbl">Min</div></div>
-                    <div class="time-box"><div class="time-val s">0</div><div class="time-lbl">Sec</div></div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 10rem;">
-                <h2 class="section-title" style="font-size: 1.8rem;">Queries & Well Wishes</h2>
-                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">Need directions or have clarifications? We are just a call away.</p>
-                <a href="tel:+919655321523" class="contact-btn">📞 Call +91 96553 21523</a>
-            </section>
+            </footer>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- DESIGN 2: ROYAL GOLD SILK -->
-    <!-- ========================================== -->
-    <div id="d2" class="design-container">
-        <canvas id="canvas-d2" class="webgl-canvas"></canvas>
-        <div class="d2-hook" id="hook-d2">
-            <div class="d2-curtain d2-left-curtain"></div>
-            <div class="d2-curtain d2-right-curtain"></div>
-            <div class="d2-hook-content" style="text-align:center;">
-                <p style="font-family:'Cinzel',serif;color:#fce8b2;font-size:1.5rem;opacity:0.8;margin-bottom:1rem;text-transform:uppercase;letter-spacing:10px;">Aravindhan & Nimisha</p>
-                <h2 style="font-family:'Playfair Display',serif;color:#d4af37;font-size:clamp(2rem, 4vw, 3.5rem);margin-bottom:3rem;text-shadow:2px 2px 4px rgba(0,0,0,0.8);font-weight:700;">A Grand Royal Celebration Awaits</h2>
-                <button class="hook-btn" onclick="unlockDesign(2)">Unveil Celebration</button>
-            </div>
-        </div>
-
-        <div class="content-wrapper">
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <h1>Aravindhan & Nimisha</h1>
-                
-                <div class="parents-info">
-                    <div class="parent-side">
-                        <h3>S. Aravindhan, M.Sc.</h3>
-                        <p>Son of<br>Mr. N. Sakthivel<br>& Mrs. S. Lalitha, M.Sc., B.Ed.</p>
-                    </div>
-                    <div class="parent-side">
-                        <h3>D. Nimisha, B.Sc.</h3>
-                        <p>Daughter of<br>Mr. S.K. Devanan<br>&amp; Mrs. D. Amutha<br></p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="section-title">The Grand Celebration</h2>
-                <div class="events-grid">
-                    <div class="event-card">
-                        <h3>Reception</h3>
-                        <p>Saturday, 11 April 2026<br>6:00 PM – 9:00 PM</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-11%2018%3A00&end=2026-04-11%2021%3A00&title=Grand%20Reception%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                    <div class="event-card">
-                        <h3>Wedding</h3>
-                        <p>Sunday, 12 April 2026<br>6:00 AM Onwards</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-12%2006%3A00&end=2026-04-12%2012%3A00&title=Wedding%20Ceremony%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                </div>
-                <div class="venue-info">
-                    <strong style="letter-spacing: 2px;">VENUE</strong><br>
-                    Rangaz Mahal,<br>Karumathampatti, Coimbatore, Tamil Nadu
-                    <div id="map-d2" class="leaflet-map" style="margin-top:1.5rem;"></div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="section-title">A Lifelong Bond</h2>
-                <div class="image-placeholder" style="border-color: #d4af37; padding: 5px;">
-                    <img src="img/couple.jpg" alt="Aravindhan & Nimisha" class="couple-image">
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="flip-up" data-aos-duration="1000">
-                <div class="feast-highlight">
-                    <span style="font-size: 1.2rem; letter-spacing: 4px; font-weight: 300;">A ROYAL BANQUET</span><br><br>
-                    Indulge in an exquisite<br>
-                    <span style="font-size: 3.5rem; color: #fff; display: block; margin-top: 1rem;">Authentic Karaikudi Feast</span>
-                    <span style="font-size: 1rem; display: block; margin-top: 1.5rem; opacity: 0.8; font-family: 'Playfair Display', serif;">A grand culinary experience to celebrate our union.</span>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 2rem;">
-                <h2 class="section-title">Awaiting The Day</h2>
-                <div class="countdown" id="cd-2">
-                    <div class="time-box"><div class="time-val d">0</div><div class="time-lbl">Days</div></div>
-                    <div class="time-box"><div class="time-val h">0</div><div class="time-lbl">Hrs</div></div>
-                    <div class="time-box"><div class="time-val m">0</div><div class="time-lbl">Min</div></div>
-                    <div class="time-box"><div class="time-val s">0</div><div class="time-lbl">Sec</div></div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 10rem;">
-                <h2 class="section-title" style="font-size: 2rem;">Clarifications & Blessings</h2>
-                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">For any doubts regarding the royal venue or timings, feel free to contact us.</p>
-                <a href="tel:+919655321523" class="contact-btn">📞 Call +91 96553 21523</a>
-            </section>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- DESIGN 3: CRYSTAL GLASS -->
-    <!-- ========================================== -->
-    <div id="d3" class="design-container">
-        <div id="d3-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:-2;transition:opacity 2s;opacity:0;"></div>
-        <canvas id="canvas-d3" class="webgl-canvas"></canvas>
-        <div class="d3-hook" id="hook-d3">
-            <div style="text-align:center;">
-                <p style="font-family:'Montserrat',sans-serif;font-weight:200;color:#555;font-size:1.5rem;opacity:0.8;margin-bottom:1rem;text-transform:uppercase;letter-spacing:10px;">Aravindhan & Nimisha</p>
-                <h2 style="font-family:'Montserrat',sans-serif;font-weight:200;color:#111;font-size:clamp(2rem, 4vw, 3.5rem);margin-bottom:3rem;letter-spacing:4px;">A Crystal Clear Promise of Forever</h2>
-                <button class="hook-btn" id="d3-hook-btn" onclick="unlockDesign(3)">Enter The Realm</button>
-            </div>
-        </div>
-
-        <div class="content-wrapper">
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <h1>Aravindhan & Nimisha</h1>
-                
-                <div class="parents-info">
-                    <div class="parent-side">
-                        <h3>S. Aravindhan, M.Sc.</h3>
-                        <p style="color:#555;">Son of<br>Mr. N. Sakthivel<br>& Mrs. S. Lalitha, M.Sc., B.Ed.</p>
-                    </div>
-                    <div class="parent-side">
-                        <h3>D. Nimisha, B.Sc.</h3>
-                        <p style="color:#555;">Daughter of<br>Mr. S.K. Devanan<br>& Mrs. D. Amutha<br></p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="zoom-in" data-aos-duration="1000">
-                <h2 class="section-title" style="font-weight: 300;">THE CELEBRATION</h2>
-                <div class="events-grid">
-                    <div class="event-card">
-                        <h3 style="font-weight: 400; color: #111;">RECEPTION</h3>
-                        <p style="color:#555;">Saturday, 11 April 2026<br>6:00 PM – 9:00 PM</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-11%2018%3A00&end=2026-04-11%2021%3A00&title=Grand%20Reception%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                    <div class="event-card">
-                        <h3 style="font-weight: 400; color: #111;">WEDDING</h3>
-                        <p style="color:#555;">Sunday, 12 April 2026<br>6:00 AM Onwards</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-12%2006%3A00&end=2026-04-12%2012%3A00&title=Wedding%20Ceremony%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                </div>
-                <div class="venue-info">
-                    <strong style="letter-spacing: 2px;">VENUE</strong><br>
-                    Rangaz Mahal,<br>Karumathampatti, Coimbatore, Tamil Nadu
-                    <div id="map-d3" class="leaflet-map" style="margin-top:1.5rem;"></div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="section-title" style="font-weight: 300;">FOREVER</h2>
-                <div class="image-placeholder" style="border-radius: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-                    <img src="img/couple.jpg" alt="Aravindhan & Nimisha" class="couple-image" style="border-radius: 0;">
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="flip-up" data-aos-duration="1000">
-                <div class="feast-highlight">
-                    <span style="font-size: 1.2rem; letter-spacing: 4px; font-weight: 300; color: #555;">A CULINARY EXPERIENCE</span><br><br>
-                    Grace us with your presence for an<br>
-                    <span style="font-size: 3rem; color: #111; font-weight: 500; display: block; margin-top: 1rem;">Authentic Karaikudi Feast</span>
-                    <span style="font-size: 1rem; display: block; margin-top: 1.5rem; color: #555; font-family: 'Montserrat', sans-serif;">Celebrating our new beginning with traditional delicacy.</span>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 2rem;">
-                <h2 class="section-title" style="font-weight: 300;">COUNTDOWN</h2>
-                <div class="countdown" id="cd-3" style="color:#333;">
-                    <div class="time-box"><div class="time-val d">0</div><div class="time-lbl">Days</div></div>
-                    <div class="time-box"><div class="time-val h">0</div><div class="time-lbl">Hrs</div></div>
-                    <div class="time-box"><div class="time-val m">0</div><div class="time-lbl">Min</div></div>
-                    <div class="time-box"><div class="time-val s">0</div><div class="time-lbl">Sec</div></div>
-                </div>
-            </section>
-
-            <section class="glass-panel" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom: 10rem;">
-                <h2 class="section-title" style="font-size: 1.8rem; font-weight: 300;">CONTACT US</h2>
-                <p style="font-size: 1.2rem; color: #555; margin-bottom: 2rem;">For location assistance or event details, please call.</p>
-                <a href="tel:+919655321523" class="contact-btn" style="color: #111;">📞 Call +91 96553 21523</a>
-            </section>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- DESIGN 4: SOUTH INDIAN PHYSICS -->
-    <div id="d4" class="design-container">
-        <canvas id="canvas-d4" class="webgl-canvas"></canvas>
-        <div class="d4-hook" id="hook-d4">
-            <div style="text-align:center; position:relative; z-index:2;">
-                <p style="font-family:'Cinzel',serif;color:#fff;font-size:1.5rem;opacity:0.8;margin-bottom:1rem;text-transform:uppercase;letter-spacing:10px;">Aravindhan &amp; Nimisha</p>
-                <h2 style="font-family:'Cinzel',serif;color:#ffb400;font-size:clamp(2rem,4vw,3.5rem);margin-bottom:3rem;text-shadow:0 0 20px #ffb400;font-weight:700;">A Sacred South‑Indian Celebration</h2>
-                <button class="hook-btn" onclick="unlockDesign(4)">Enter The Sacred Realm</button>
-            </div>
-        </div>
-        <div class="content-wrapper">
-
-            <!-- BRIDE & GROOM -->
-            <section class="glass-panel">
-                <p style="font-family:'Cinzel',serif; letter-spacing:6px; color:#d4af37; margin-bottom:0.8rem; font-size:0.9rem;">✦ AN AUSPICIOUS UNION ✦</p>
-                <h1>Aravindhan &amp; Nimisha</h1>
-                <div style="color:#d4af37; font-size:2rem; margin:1rem 0;">🪷</div>
-                <div class="parents-info">
-                    <div class="parent-side">
-                        <h3>S. Aravindhan, M.Sc.</h3>
-                        <p>Son of<br>Mr. N. Sakthivel<br>&amp; Mrs. S. Lalitha, M.Sc., B.Ed.</p>
-                    </div>
-                    <div class="parent-side">
-                        <h3>D. Nimisha, B.Sc.</h3>
-                        <p>Daughter of<br>Mr. S.K. Devanan<br>&amp; Mrs. D. Amutha</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- COUPLE PHOTO -->
-            <section class="glass-panel">
-                <h2 class="section-title">❤️ Bound by the Sacred Knot</h2>
-                <div class="image-placeholder" style="border:2px solid rgba(212,175,55,0.4); border-radius:15px;">
-                    <img src="img/couple.jpg" alt="Aravindhan &amp; Nimisha" class="couple-image">
-                </div>
-            </section>
-
-            <!-- EVENTS -->
-            <section class="glass-panel">
-                <h2 class="section-title">🪔 The Sacred Celebrations</h2>
-                <div class="events-grid">
-                    <div class="event-card">
-                        <h3>Reception</h3>
-                        <p>Saturday, 11 April 2026<br>6:00 PM – 9:00 PM</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-11%2018%3A00&end=2026-04-11%2021%3A00&title=Grand%20Reception%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                    <div class="event-card">
-                        <h3>Thirumana Vizha</h3>
-                        <p>Sunday, 12 April 2026<br>6:00 AM Onwards</p>
-                        <a href="https://calndr.link/d/event/?service=apple&start=2026-04-12%2006%3A00&end=2026-04-12%2012%3A00&title=Wedding%20Ceremony%20-%20Aravindhan%20%26%20Nimisha&location=Rangaz%20Mahal%2C%20Coimbatore" target="_blank" class="calendar-btn">📅 Add to Calendar</a>
-                    </div>
-                </div>
-                <div class="venue-info">
-                    <strong style="color:#d4af37; letter-spacing:2px;">🏛 VENUE</strong><br>
-                    Rangaz Mahal,<br>Karumathampatti, Coimbatore, Tamil Nadu
-                    <div id="map-d4" class="leaflet-map" style="margin-top:1.5rem;"></div>
-                </div>
-            </section>
-
-            <!-- FEAST -->
-            <section class="glass-panel">
-                <div class="feast-highlight" style="padding:2rem; border-radius:12px;">
-                    <p style="font-size:1.1rem; letter-spacing:5px; margin-bottom:1rem;">🌶 SAUVAGAM VIRUNDHU 🌶</p>
-                    <span style="font-size:3rem; font-family:'Cinzel',serif; color:#d4af37; display:block; margin:0.5rem 0;">Authentic Karaikudi Feast</span>
-                    <p style="margin-top:1rem; opacity:0.85;">Savour the rich, aromatic flavours of Chettinad cuisine,<br>lovingly prepared to celebrate this joyous union.</p>
-                </div>
-            </section>
-
-            <!-- COUNTDOWN -->
-            <section class="glass-panel" style="margin-bottom:2rem;">
-                <h2 class="section-title">⏳ Muhurtham Countdown</h2>
-                <div class="countdown" id="cd-4">
-                    <div class="time-box"><div class="time-val d" style="color:#d4af37;">0</div><div class="time-lbl" style="color:#d4b896;">Days</div></div>
-                    <div class="time-box"><div class="time-val h" style="color:#d4af37;">0</div><div class="time-lbl" style="color:#d4b896;">Hrs</div></div>
-                    <div class="time-box"><div class="time-val m" style="color:#d4af37;">0</div><div class="time-lbl" style="color:#d4b896;">Min</div></div>
-                    <div class="time-box"><div class="time-val s" style="color:#d4af37;">0</div><div class="time-lbl" style="color:#d4b896;">Sec</div></div>
-                </div>
-            </section>
-
-            <!-- CONTACT -->
-            <section class="glass-panel" style="margin-bottom:10rem;">
-                <h2 class="section-title" style="font-size:1.8rem;">🙏 For Doubts or Clarification</h2>
-                <p style="font-size:1.1rem; margin-bottom:2rem;">We are honoured to welcome you to this sacred celebration.<br>Please reach out for any queries or directions.</p>
-                <a href="tel:+919655321523" class="contact-btn">📞 Call +91 96553 21523</a>
-            </section>
-
-        </div>
-    </div>
-    <!-- SCRIPTS FOR 3D LOGIC, AOS, CURSOR -->
-    <!-- ========================================== -->
     <script>
-        // Preloader Logic
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.remove(), 1000);
-            }, 1800);
-        });
+        (function () {
+            var body = document.body;
+            var splash = document.getElementById("splash");
+            var cta = document.getElementById("splash-cta");
+            var curtainScrollThreshold = 48;
+            var curtainsOpened = false;
 
-        // Shared State
-        let currentDesign = 1;
-        let isUnlocked = { 1: false, 2: false, 3: false };
-        
-        // Setup Three.js scenes
-        const scenes = {};
-        const cameras = {};
-        const renderers = {};
-        const animationIds = {};
-
-        function initScene(id, bgColor, alpha = false) {
-            const canvas = document.getElementById(`canvas-d${id}`);
-            const scene = new THREE.Scene();
-            if (!alpha && bgColor) scene.background = new THREE.Color(bgColor);
-            
-            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: alpha });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            scenes[id] = scene;
-            cameras[id] = camera;
-            renderers[id] = renderer;
-        }
-
-        // --- DESIGN 1: COSMIC EXPLOSION ---
-        initScene(1, 0x02020a);
-        const d1Geometry = new THREE.BufferGeometry();
-        const d1Count = 5000;
-        const d1Pos = new Float32Array(d1Count * 3);
-        const d1Vel = [];
-        const d1Colors = new Float32Array(d1Count * 3);
-        const colorCyan = new THREE.Color(0x00d4ff);
-        const colorPink = new THREE.Color(0xff00ff);
-        
-        for(let i=0; i<d1Count; i++) {
-            const r = Math.random() * 20;
-            const theta = Math.random() * 2 * Math.PI;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            
-            d1Pos[i*3] = r * Math.sin(phi) * Math.cos(theta);
-            d1Pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-            d1Pos[i*3+2] = r * Math.cos(phi);
-
-            d1Vel.push({
-                x: (Math.random() - 0.5) * 15,
-                y: (Math.random() - 0.5) * 15,
-                z: (Math.random() - 0.5) * 15,
-                speed: Math.random() * 2 + 0.5
-            });
-
-            const c = Math.random() < 0.5 ? colorCyan : colorPink;
-            d1Colors[i*3] = c.r; d1Colors[i*3+1] = c.g; d1Colors[i*3+2] = c.b;
-        }
-        
-        d1Geometry.setAttribute('position', new THREE.BufferAttribute(d1Pos, 3));
-        d1Geometry.setAttribute('color', new THREE.BufferAttribute(d1Colors, 3));
-        const d1Material = new THREE.PointsMaterial({ size: 2, vertexColors: true, blending: THREE.AdditiveBlending, transparent: true });
-        const d1Particles = new THREE.Points(d1Geometry, d1Material);
-        scenes[1].add(d1Particles);
-        cameras[1].position.z = 150;
-
-        let d1Exploding = false;
-        function animateD1() {
-            animationIds[1] = requestAnimationFrame(animateD1);
-            if (!d1Exploding && !isUnlocked[1]) {
-                d1Particles.rotation.y += 0.01;
-                d1Particles.rotation.x += 0.005;
-                const scale = 1 + Math.sin(Date.now() * 0.002) * 0.1;
-                d1Particles.scale.set(scale, scale, scale);
-            } else if (d1Exploding) {
-                const positions = d1Particles.geometry.attributes.position.array;
-                for(let i=0; i<d1Count; i++) {
-                    positions[i*3] += d1Vel[i].x * d1Vel[i].speed;
-                    positions[i*3+1] += d1Vel[i].y * d1Vel[i].speed;
-                    positions[i*3+2] += d1Vel[i].z * d1Vel[i].speed;
-                    d1Vel[i].x *= 0.98; d1Vel[i].y *= 0.98; d1Vel[i].z *= 0.98;
+            function onScrollCurtains() {
+                if (curtainsOpened) return;
+                if (window.scrollY > curtainScrollThreshold) {
+                    curtainsOpened = true;
+                    body.classList.add("curtain-open");
+                    window.removeEventListener("scroll", onScrollCurtains);
                 }
-                d1Particles.geometry.attributes.position.needsUpdate = true;
-                d1Particles.rotation.y += 0.002;
-                if(cameras[1].position.z < 400) cameras[1].position.z += 2;
             }
-            renderers[1].render(scenes[1], cameras[1]);
-        }
 
-        // --- DESIGN 2: ROYAL GOLD SILK ---
-        initScene(2, 0x1a0000);
-        const d2Geometry = new THREE.PlaneGeometry(800, 800, 64, 64);
-        const d2Material = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.3, metalness: 0.8, side: THREE.DoubleSide });
-        const d2Plane = new THREE.Mesh(d2Geometry, d2Material);
-        d2Plane.rotation.x = -Math.PI / 2.5;
-        scenes[2].add(d2Plane);
-        const d2Light1 = new THREE.PointLight(0xffffff, 1, 1000);
-        d2Light1.position.set(0, 100, 200);
-        scenes[2].add(d2Light1);
-        scenes[2].add(new THREE.AmbientLight(0x400000));
-        cameras[2].position.set(0, -50, 250);
-
-        let d2Time = 0;
-        let d2Opening = false;
-        const d2InitialPositions = JSON.parse(JSON.stringify(d2Geometry.attributes.position.array));
-
-        function animateD2() {
-            animationIds[2] = requestAnimationFrame(animateD2);
-            d2Time += 0.02;
-            const positions = d2Plane.geometry.attributes.position.array;
-            
-            for(let i=0; i<positions.length; i+=3) {
-                const x = d2InitialPositions[i];
-                const y = d2InitialPositions[i+1];
-                let z = Math.sin(x * 0.02 + d2Time) * 15 + Math.cos(y * 0.02 + d2Time) * 15;
-                if (d2Opening) {
-                    const distanceToCenter = Math.abs(x);
-                    z -= Math.max(0, 200 - distanceToCenter) * 0.5;
+            function setupCurtainScroll() {
+                if (body.dataset.curtainScrollBound === "1") return;
+                body.dataset.curtainScrollBound = "1";
+                window.addEventListener("scroll", onScrollCurtains, { passive: true });
+                if (window.scrollY > curtainScrollThreshold) {
+                    curtainsOpened = true;
+                    body.classList.add("curtain-open");
                 }
-                positions[i+2] = z;
             }
-            d2Plane.geometry.attributes.position.needsUpdate = true;
-            d2Plane.geometry.computeVertexNormals();
-            if(d2Opening && d2Plane.position.y > -200) d2Plane.position.y -= 2;
-            renderers[2].render(scenes[2], cameras[2]);
-        }
 
-        // --- DESIGN 3: CRYSTAL SHATTER ---
-        initScene(3, null, true);
-        const d3Material = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0, transmission: 1.0, ior: 1.52, thickness: 5.0, clearcoat: 1.0 });
-        const d3Diamond = new THREE.Mesh(new THREE.OctahedronGeometry(40, 0), d3Material);
-        scenes[3].add(d3Diamond);
+            function startTheaterEntrance() {
+                if (!body.classList.contains("theater-entrance")) return;
+                window.setTimeout(function () {
+                    body.classList.remove("theater-entrance");
+                }, 380);
+            }
 
-        const d3Shards = [];
-        for(let i=0; i<30; i++) {
-            const shard = new THREE.Mesh(new THREE.TetrahedronGeometry(Math.random() * 8 + 2, 0), d3Material);
-            shard.position.copy(d3Diamond.position);
-            shard.visible = false;
-            shard.userData.vel = { x: (Math.random() - 0.5)*8, y: (Math.random() - 0.5)*8, z: (Math.random() - 0.5)*8, rx: Math.random()*0.1, ry: Math.random()*0.1 };
-            scenes[3].add(shard);
-            d3Shards.push(shard);
-        }
-        scenes[3].add(new THREE.AmbientLight(0xffffff, 0.5));
-        const d3DirLight = new THREE.DirectionalLight(0xffffff, 2);
-        d3DirLight.position.set(200, 200, 200);
-        scenes[3].add(d3DirLight);
-        cameras[3].position.z = 150;
+            function dismiss() {
+                body.classList.add("splash-dismissed");
+                if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                    body.classList.add("theater-entrance");
+                }
+                splash.setAttribute("aria-hidden", "true");
+                setupCurtainScroll();
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(startTheaterEntrance);
+                });
+                var main = document.getElementById("main");
+                if (main) main.focus({ preventScroll: true });
+            }
 
-        let d3Shattered = false;
-        function animateD3() {
-            animationIds[3] = requestAnimationFrame(animateD3);
-            if (!d3Shattered && !isUnlocked[3]) {
-                d3Diamond.rotation.y += 0.005;
-                d3Diamond.rotation.x += 0.002;
-            } else if (d3Shattered) {
-                if(d3Diamond.scale.x > 0) d3Diamond.scale.multiplyScalar(0.8);
-                if(d3Diamond.scale.x < 0.01) d3Diamond.visible = false;
-                d3Shards.forEach(s => {
-                    s.visible = true;
-                    s.position.x += s.userData.vel.x;
-                    s.position.y += s.userData.vel.y;
-                    s.position.z += s.userData.vel.z;
-                    s.rotation.x += s.userData.vel.rx;
-                    s.rotation.y += s.userData.vel.ry;
-                    s.userData.vel.x *= 0.95; s.userData.vel.y *= 0.95; s.userData.vel.z *= 0.95;
+            if (cta) cta.addEventListener("click", dismiss);
+
+            var skip = document.querySelector(".skip-link");
+            if (skip) {
+                skip.addEventListener("click", function (e) {
+                    if (!body.classList.contains("splash-dismissed")) {
+                        e.preventDefault();
+                        dismiss();
+                        var t = document.getElementById("main");
+                        if (t) {
+                            t.setAttribute("tabindex", "-1");
+                            t.focus({ preventScroll: false });
+                            if (t.id) location.hash = t.id;
+                        }
+                    }
                 });
             }
-            renderers[3].render(scenes[3], cameras[3]);
-        }
+        })();
 
-        // --- UI LOGIC ---
-        function switchDesign(id) {
-            currentDesign = id;
-            document.querySelectorAll('.design-container').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.switch-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(`d${id}`).classList.add('active');
-            document.querySelectorAll('.switch-btn')[id-1].classList.add('active');
+        (function () {
+            var daysEl = document.getElementById("cd-days");
+            var hoursEl = document.getElementById("cd-hours");
+            var minutesEl = document.getElementById("cd-minutes");
+            var secondsEl = document.getElementById("cd-seconds");
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-            for(let i=1; i<=4; i++) if(animationIds[i]) cancelAnimationFrame(animationIds[i]);
-            if(id === 1) animateD1();
-            if(id === 2) animateD2();
-            if(id === 3) animateD3();
-            if(id === 4) animateD4();
-        }
+            var target = new Date(2026, 3, 12, 0, 0, 0);
 
-        function unlockDesign(id) {
-            if(isUnlocked[id]) return;
-            isUnlocked[id] = true;
-            document.getElementById(`d${id}`).classList.add('unlocked-scroll');
-            document.getElementById(`hook-d${id}`).classList.add('unlocked');
-            // Initialize Leaflet map on first unlock
-            const mapId = `map-d${id}`;
-            const mapEl = document.getElementById(mapId);
-            if(mapEl && !mapEl._leaflet_id) {
-                const lMap = L.map(mapId, { zoomControl: true, scrollWheelZoom: false });
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(lMap);
-                const venueLatLng = [11.0535, 77.0204]; // Karumathampatti, Coimbatore
-                lMap.setView(venueLatLng, 15);
-                const icon = L.divIcon({ html: '<div style="font-size:2rem;">📍</div>', className: '', iconAnchor: [16, 32] });
-                L.marker(venueLatLng, { icon }).addTo(lMap)
-                    .bindPopup('<b>Rangaz Mahal</b><br>Karumathampatti, Coimbatore')
-                    .openPopup();
-            }
-            if(id === 1) d1Exploding = true;
-            if(id === 2) { d2Opening = true; }
-            if(id === 3) { 
-                d3Shattered = true; 
-                document.getElementById('d3-bg').style.opacity = '1'; 
+            function tick() {
+                var now = new Date();
+                var ms = target.getTime() - now.getTime();
+                if (ms <= 0) {
+                    daysEl.textContent = "0";
+                    hoursEl.textContent = "0";
+                    minutesEl.textContent = "0";
+                    secondsEl.textContent = "0";
+                    return;
                 }
-        // Initialize Design 4 scene
-        const scene4 = new THREE.Scene();
-        const camera4 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer4 = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas-d4'), antialias: true });
-        renderer4.setSize(window.innerWidth, window.innerHeight);
-        // Simple warm particle effect for Design 4
-        const particles4 = new THREE.Group();
-        for (let i = 0; i < 200; i++) {
-            const geometry = new THREE.SphereGeometry(0.02, 8, 8);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffb400 });
-            const particle = new THREE.Mesh(geometry, material);
-            particle.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
-            particles4.add(particle);
-        }
-        scene4.add(particles4);
-        camera4.position.z = 5;
-        function animateD4() {
-            animationIds[4] = requestAnimationFrame(animateD4);
-            particles4.rotation.y += 0.001;
-            renderer4.render(scene4, camera4);
-        }
-        // Extend switchDesign to handle id 4
-        const originalSwitchDesign = switchDesign;
-        switchDesign = function(id) {
-            originalSwitchDesign(id);
-            if (id === 4) animateD4();
-        };
-        // Extend unlockDesign for design 4 (optional visual cue)
-        const originalUnlockDesign = unlockDesign;
-        unlockDesign = function(id) {
-            originalUnlockDesign(id);
-            if (id === 4) {
-                document.getElementById('d4-bg')?.style && (document.getElementById('d4-bg').style.opacity = '1');
+                var d = Math.floor(ms / 86400000);
+                var h = Math.floor((ms % 86400000) / 3600000);
+                var m = Math.floor((ms % 3600000) / 60000);
+                var s = Math.floor((ms % 60000) / 1000);
+                daysEl.textContent = String(d);
+                hoursEl.textContent = String(h);
+                minutesEl.textContent = String(m);
+                secondsEl.textContent = String(s);
             }
-        };
 
-        }
+            tick();
+            window.setInterval(tick, 1000);
+        })();
 
-        // --- DESIGN 4: SOUTH INDIAN WARM PARTICLES ---
-        initScene(4, 0x100300, true);
-        scenes[4].background = new THREE.Color(0x160400);
-        const d4Geometry = new THREE.BufferGeometry();
-        const d4Count = 3000;
-        const d4Pos = new Float32Array(d4Count * 3);
-        const d4Colors = new Float32Array(d4Count * 3);
-        const d4Vel = [];
-        const goldColor = new THREE.Color(0xd4af37);
-        const maroonColor = new THREE.Color(0x8b0000);
-        const saffronColor = new THREE.Color(0xff6600);
-        const d4Palette = [goldColor, maroonColor, saffronColor];
-        for(let i = 0; i < d4Count; i++) {
-            d4Pos[i*3]   = (Math.random() - 0.5) * 30;
-            d4Pos[i*3+1] = (Math.random() - 0.5) * 30;
-            d4Pos[i*3+2] = (Math.random() - 0.5) * 30;
-            const c = d4Palette[Math.floor(Math.random() * d4Palette.length)];
-            d4Colors[i*3]   = c.r;
-            d4Colors[i*3+1] = c.g;
-            d4Colors[i*3+2] = c.b;
-            d4Vel.push({ x: (Math.random()-0.5)*0.005, y: (Math.random()-0.5)*0.005, z: (Math.random()-0.5)*0.005 });
-        }
-        d4Geometry.setAttribute('position', new THREE.BufferAttribute(d4Pos, 3));
-        d4Geometry.setAttribute('color',    new THREE.BufferAttribute(d4Colors, 3));
-        const d4Material = new THREE.PointsMaterial({ size: 0.05, vertexColors: true, transparent: true, opacity: 0.85 });
-        const d4Particles = new THREE.Points(d4Geometry, d4Material);
-        scenes[4].add(d4Particles);
-        cameras[4].position.z = 8;
-        function animateD4() {
-            animationIds[4] = requestAnimationFrame(animateD4);
-            d4Particles.rotation.y += 0.0008;
-            d4Particles.rotation.x += 0.0002;
-            renderers[4].render(scenes[4], cameras[4]);
-        }
+        (function () {
+            var els = document.querySelectorAll(".js-reveal");
+            if (!els.length) return;
 
-        window.addEventListener('resize', () => {
-            for(let i=1; i<=4; i++) {
-                if(cameras[i]) {
-                    cameras[i].aspect = window.innerWidth / window.innerHeight;
-                    cameras[i].updateProjectionMatrix();
-                    renderers[i].setSize(window.innerWidth, window.innerHeight);
-                }
+            function revealAll() {
+                els.forEach(function (el) {
+                    el.classList.add("is-revealed");
+                });
             }
-        });
-        
-        switchDesign(1);
 
-        // --- COUNTDOWN LOGIC ---
-        const eventDate = new Date("Apr 12, 2026 06:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const distance = eventDate - now;
-            let d = 0, h = 0, m = 0, s = 0;
-            if (distance > 0) {
-                d = Math.floor(distance / (1000 * 60 * 60 * 24));
-                h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                s = Math.floor((distance % (1000 * 60)) / 1000);
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                revealAll();
+                return;
             }
-            [1,2,3,4].forEach(id => {
-                const el = document.getElementById(`cd-${id}`);
-                if (!el) return;
-                el.querySelector('.d').innerText = d;
-                el.querySelector('.h').innerText = h < 10 ? '0'+h : h;
-                el.querySelector('.m').innerText = m < 10 ? '0'+m : m;
-                el.querySelector('.s').innerText = s < 10 ? '0'+s : s;
+
+            if (!("IntersectionObserver" in window)) {
+                revealAll();
+                return;
+            }
+
+            var io = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add("is-revealed");
+                            io.unobserve(en.target);
+                        }
+                    });
+                },
+                { rootMargin: "0px 0px -6% 0px", threshold: 0.1 }
+            );
+
+            els.forEach(function (el) {
+                io.observe(el);
             });
-        }, 1000);
-
+        })();
     </script>
 </body>
 </html>
