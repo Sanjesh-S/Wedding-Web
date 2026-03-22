@@ -1,4 +1,4 @@
-/* Opening splash — procedural silk / curtain texture (no bitmap photos) */
+/* Opening splash — curtain texture + couple portrait in seal */
 
 :root {
     --splash-cream: #f5f0e6;
@@ -10,7 +10,6 @@
     --seal-gold-deep: #8b6914;
     --seal-gold-shadow: #4a3008;
     --seal-stamp: #4a3207;
-    --splash-monogram: #5a1c2e;
     --splash-disk-edge: #c9a227;
     --splash-disk-edge-2: #8b6914;
     /* Side drapes framing the stage (theatre-demo style — wide center, narrow wings) */
@@ -124,11 +123,11 @@
     border-radius: 12px;
 }
 
-/* Image-2 style: gold botanics + cream disc + double gold ring + interlocking script SN */
+/* Gold botanics + circular portrait in cream seal */
 .splash__cta-ring {
     position: relative;
-    width: clamp(6.75rem, 19vw, 9.25rem);
-    height: clamp(6.75rem, 19vw, 9.25rem);
+    width: clamp(7.5rem, 24vw, 11rem);
+    height: clamp(7.5rem, 24vw, 11rem);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -157,7 +156,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at 38% 30%, #fffefa 0%, #faf4e8 45%, #efe6d4 100%);
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 40%, #fffefa 0%, #faf4e8 55%, #efe6d4 100%);
     box-shadow:
         0 0 0 1.5px var(--splash-disk-edge),
         0 0 0 3px #faf6ef,
@@ -169,53 +169,12 @@
         inset 0 -4px 14px rgba(92, 60, 40, 0.06);
 }
 
-.splash__cta-monogram {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    margin-top: 0.08em;
-    padding: 0 0.12em;
-    font-size: clamp(1.85rem, 6.8vw, 2.65rem);
-}
-
-.splash__cta-script {
-    font-family: "Alex Brush", cursive;
-    font-weight: 400;
-    color: var(--splash-monogram);
-    font-size: 1em;
-    line-height: 0.72;
-    letter-spacing: -0.02em;
-    text-shadow:
-        0 1px 0 rgba(255, 252, 248, 0.95),
-        0 2px 8px rgba(62, 22, 40, 0.12);
-    display: inline-block;
-}
-
-.splash__cta-amp {
-    font-family: "Alex Brush", cursive;
-    font-weight: 400;
-    color: var(--splash-monogram);
-    font-size: 0.4em;
-    line-height: 1;
-    margin: 0 -0.04em;
-    padding-bottom: 0.15em;
-    align-self: center;
-    opacity: 0.92;
-    text-shadow:
-        0 1px 0 rgba(255, 252, 248, 0.95),
-        0 2px 6px rgba(62, 22, 40, 0.1);
-}
-
-.splash__cta-script--a {
-    position: relative;
-    z-index: 2;
-    transform: translate(0.02em, -0.06em);
-}
-
-.splash__cta-script--n {
-    position: relative;
-    z-index: 1;
-    transform: translate(-0.2em, 0.1em);
+.splash__cta-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
 }
 
 .splash__cta-text {
