@@ -1,0 +1,223 @@
+/* Details page — same cream world as home (use with body.page-premium) */
+
+body.page-premium {
+    background-color: var(--page-cream);
+    color: var(--page-ink);
+}
+
+.page-premium .site-header--premium {
+    border-bottom: 1px solid rgba(74, 48, 32, 0.09);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(249, 247, 242, 0.92) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    padding-left: calc(1.25rem + env(safe-area-inset-left, 0px));
+    padding-right: calc(1.25rem + env(safe-area-inset-right, 0px));
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.page-premium .site-header--premium .brand {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3d2818;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.page-premium .site-header--premium .brand:hover,
+.page-premium .site-header--premium .brand:focus-visible {
+    color: var(--page-maroon);
+    opacity: 1;
+}
+
+.page-premium .site-header--premium .site-nav a {
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5c4f45;
+    text-decoration: none;
+    padding: 0.35rem 0;
+    border-bottom: 2px solid transparent;
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.page-premium .site-header--premium .site-nav a:hover,
+.page-premium .site-header--premium .site-nav a:focus-visible {
+    color: var(--page-sage);
+    opacity: 1;
+    border-bottom-color: rgba(201, 162, 39, 0.55);
+}
+
+.page-premium .site-header--premium .site-nav a[aria-current="page"] {
+    color: var(--page-sage);
+    border-bottom-color: var(--page-gold-soft);
+}
+
+.page-premium .site-footer--premium {
+    margin-top: auto;
+    border-top: 1px solid rgba(74, 48, 32, 0.09);
+    padding-top: 2rem;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(1.25rem + env(safe-area-inset-left, 0px));
+    padding-right: calc(1.25rem + env(safe-area-inset-right, 0px));
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.4) 0%, rgba(249, 247, 242, 0.95) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    font-size: 0.92rem;
+    color: var(--page-ink-muted);
+}
+
+.page-premium .site-footer--premium .site-footer__inner p {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    letter-spacing: 0.05em;
+}
+
+.page-premium .section--premium-hero {
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+    border-bottom: 1px solid rgba(74, 48, 32, 0.07);
+    background: linear-gradient(180deg, rgba(201, 162, 39, 0.06) 0%, transparent 55%);
+}
+
+.page-premium .section__title--premium {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 600;
+    color: #3d2818;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.02em;
+}
+
+.page-premium .section__lead--premium {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+    font-weight: 500;
+    color: var(--page-ink-muted);
+    max-width: 36rem;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.page-premium .section--premium-band {
+    border-top: 1px solid rgba(74, 48, 32, 0.07);
+}
+
+.page-premium .section__subtitle--premium {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.25rem, 3vw, 1.55rem);
+    font-weight: 600;
+    color: var(--page-sage);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.03em;
+}
+
+.page-premium .schedule-list {
+    list-style: none;
+    max-width: 32rem;
+    margin: 0 auto;
+}
+
+.page-premium .schedule-list li {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(74, 93, 63, 0.12);
+    display: grid;
+    gap: 0.35rem;
+    text-align: center;
+}
+
+.page-premium .schedule-list li:first-child {
+    padding-top: 0;
+}
+
+.page-premium .schedule-list__label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--page-gold);
+}
+
+.page-premium .schedule-list__when {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #3d2818;
+}
+
+.page-premium .schedule-list__detail {
+    font-size: 0.95rem;
+    color: var(--page-ink-muted);
+}
+
+.page-premium .detail-note {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    color: var(--page-ink-muted);
+    max-width: 32rem;
+    margin: 1.5rem auto 0;
+    line-height: 1.65;
+    text-align: center;
+}
+
+.page-premium .venue-card {
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(74, 93, 63, 0.06) 0%, transparent 100%);
+    border: 1px solid rgba(74, 93, 63, 0.1);
+    text-align: center;
+}
+
+.page-premium .venue-card__name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--page-sage);
+    margin-bottom: 0.35rem;
+}
+
+.page-premium .venue-card__address {
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    font-size: 0.92rem;
+    color: var(--page-ink-muted);
+    margin-bottom: 1rem;
+}
+
+.page-premium .venue-card__link {
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--page-sage);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: rgba(201, 162, 39, 0.5);
+}
+
+.page-premium .venue-card__link:hover,
+.page-premium .venue-card__link:focus-visible {
+    color: #3d2818;
+}
+
+@media (max-width: 480px) {
+    .page-premium .schedule-list__when,
+    .page-premium .schedule-list__detail {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .page-premium .site-nav a {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}

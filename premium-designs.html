@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Wedding — Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="premium-shared.css">
+    <link rel="stylesheet" href="premium-designs.css">
+</head>
+<body class="page-home">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div id="splash" class="splash" role="dialog" aria-modal="true" aria-labelledby="splash-cta-label">
+        <div class="splash__bg" aria-hidden="true"></div>
+
+        <button type="button" class="splash__cta" id="splash-cta" aria-labelledby="splash-cta-label">
+            <span class="splash__cta-ring" aria-hidden="true">
+                <svg class="splash__cta-botanics" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="splashLeafGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a67c2a"/>
+                            <stop offset="50%" stop-color="#d4af37"/>
+                            <stop offset="100%" stop-color="#8b6914"/>
+                        </linearGradient>
+                    </defs>
+                    <g fill="none" stroke="url(#splashLeafGold)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" opacity="0.92">
+                        <path d="M52 118 Q38 102 32 82 Q28 68 36 58 Q44 52 52 62 Q48 78 56 92 Q62 104 70 108"/>
+                        <path d="M42 72 Q48 68 54 74 M38 88 Q46 84 52 90 M48 98 Q56 94 62 100"/>
+                        <ellipse cx="40" cy="66" rx="5" ry="9" transform="rotate(-35 40 66)"/>
+                        <ellipse cx="34" cy="86" rx="4" ry="7" transform="rotate(25 34 86)"/>
+                        <path d="M148 132 Q162 118 168 98 Q172 84 164 76 Q156 72 150 82 Q154 96 148 110 Q142 124 134 128"/>
+                        <path d="M158 88 Q152 84 146 90 M164 104 Q156 100 150 106 M156 116 Q148 112 142 118"/>
+                        <ellipse cx="162" cy="80" rx="5" ry="9" transform="rotate(40 162 80)"/>
+                        <ellipse cx="168" cy="100" rx="4" ry="7" transform="rotate(-28 168 100)"/>
+                        <path d="M72 168 Q88 162 100 158 Q118 152 132 158" opacity="0.75"/>
+                    </g>
+                </svg>
+                <span class="splash__cta-disk">
+                    <span class="splash__cta-monogram" aria-hidden="true">
+                        <span class="splash__cta-script splash__cta-script--a">A</span><span class="splash__cta-amp">&amp;</span><span class="splash__cta-script splash__cta-script--n">N</span>
+                    </span>
+                </span>
+            </span>
+            <span class="splash__cta-text" id="splash-cta-label">Tap to continue</span>
+        </button>
+    </div>
+
+    <div class="site-wrap">
+        <div class="theater-curtains" aria-hidden="true">
+            <div class="theater-curtains__panel theater-curtains__panel--left">
+                <div class="theater-curtains__fabric"></div>
+                <div class="theater-curtains__leaves">
+                    <svg viewBox="0 0 100 360" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="bananaLeafL" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#0f2918"/>
+                                <stop offset="40%" stop-color="#1b4332"/>
+                                <stop offset="100%" stop-color="#2d6a4f"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#bananaLeafL)" d="M98 0 Q22 100 6 180 Q-2 260 18 360h82V0z" opacity="0.95"/>
+                        <path fill="#1b4332" d="M100 40 Q48 130 32 220 L100 280V40z" opacity="0.5"/>
+                        <path fill="none" stroke="#95d5b2" stroke-width="0.7" opacity="0.45" d="M82 24 Q38 160 52 320"/>
+                        <path fill="none" stroke="#b7e4c7" stroke-width="0.5" opacity="0.35" d="M70 60 Q30 180 45 300"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="theater-curtains__panel theater-curtains__panel--right">
+                <div class="theater-curtains__fabric"></div>
+                <div class="theater-curtains__leaves theater-curtains__leaves--mirror">
+                    <svg viewBox="0 0 100 360" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="bananaLeafR" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#0f2918"/>
+                                <stop offset="40%" stop-color="#1b4332"/>
+                                <stop offset="100%" stop-color="#2d6a4f"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#bananaLeafR)" d="M98 0 Q22 100 6 180 Q-2 260 18 360h82V0z" opacity="0.95"/>
+                        <path fill="#1b4332" d="M100 40 Q48 130 32 220 L100 280V40z" opacity="0.5"/>
+                        <path fill="none" stroke="#95d5b2" stroke-width="0.7" opacity="0.45" d="M82 24 Q38 160 52 320"/>
+                        <path fill="none" stroke="#b7e4c7" stroke-width="0.5" opacity="0.35" d="M70 60 Q30 180 45 300"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="stage-shell">
+            <header class="site-header site-header--theater">
+                <div class="site-header__inner">
+                    <a class="brand" href="premium-designs.html">A&amp;N</a>
+                    <nav aria-label="Primary">
+                        <ul class="site-nav">
+                            <li><a href="premium-designs.html" aria-current="page">Home</a></li>
+                            <li><a href="premium-details.html">Details</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <svg class="stage-corner-vine stage-corner-vine--left" viewBox="0 0 20 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="vineCornerL" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#8b6914"/>
+                        <stop offset="50%" stop-color="#d4af37"/>
+                        <stop offset="100%" stop-color="#a67c2a"/>
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="url(#vineCornerL)" stroke-width="0.85" d="M14 0 Q5 120 14 240 Q5 360 14 480 Q6 540 14 600"/>
+                <g fill="#c9a227" opacity="0.44">
+                    <ellipse cx="11" cy="36" rx="2.2" ry="3.6" transform="rotate(-25 11 36)"/>
+                    <ellipse cx="8" cy="140" rx="2" ry="3.2" transform="rotate(22 8 140)"/>
+                    <ellipse cx="12" cy="250" rx="2.2" ry="3.5" transform="rotate(-20 12 250)"/>
+                    <ellipse cx="9" cy="360" rx="2" ry="3.2" transform="rotate(24 9 360)"/>
+                    <ellipse cx="12" cy="470" rx="2.1" ry="3.4" transform="rotate(-22 12 470)"/>
+                </g>
+            </svg>
+            <svg class="stage-corner-vine stage-corner-vine--right" viewBox="0 0 20 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="vineCornerR" x1="1" y1="0" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#8b6914"/>
+                        <stop offset="50%" stop-color="#d4af37"/>
+                        <stop offset="100%" stop-color="#a67c2a"/>
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="url(#vineCornerR)" stroke-width="0.85" d="M6 0 Q15 120 6 240 Q15 360 6 480 Q14 540 6 600"/>
+                <g fill="#c9a227" opacity="0.44">
+                    <ellipse cx="9" cy="36" rx="2.2" ry="3.6" transform="rotate(25 9 36)"/>
+                    <ellipse cx="12" cy="140" rx="2" ry="3.2" transform="rotate(-22 12 140)"/>
+                    <ellipse cx="8" cy="250" rx="2.2" ry="3.5" transform="rotate(20 8 250)"/>
+                    <ellipse cx="11" cy="360" rx="2" ry="3.2" transform="rotate(-24 11 360)"/>
+                    <ellipse cx="8" cy="470" rx="2.1" ry="3.4" transform="rotate(22 8 470)"/>
+                </g>
+            </svg>
+
+            <main id="main" class="stage-main" tabindex="-1">
+                <section class="stage-invite" id="hero" aria-label="Invitation">
+                    <div class="stage-invite__canva-inner">
+                        <h1 class="visually-hidden">Wedding invitation — Aravindhan and Nimisha</h1>
+                        <!-- Tip: Export your Canva design as PNG and use <img src="img/your-invite.png" alt="…"> instead of this iframe to remove Canva’s bottom toolbar (trade-off: design won’t auto-update from Canva). -->
+                        <div class="canva-embed">
+                            <iframe
+                                class="canva-embed__iframe"
+                                title="Wedding invitation — Canva design"
+                                src="https://www.canva.com/design/DAHEq4g5NZc/u1YdVZXMRH_zg6Y0nGMN0A/view?embed"
+                                allowfullscreen="allowfullscreen"
+                                allow="fullscreen"
+                                loading="lazy"></iframe>
+                        </div>
+
+                        <div class="invite-below js-reveal" aria-labelledby="parents-blessings">
+                            <div class="invite-below__petals" aria-hidden="true"></div>
+                            <div class="invite-below__corners" aria-hidden="true"></div>
+                            <div class="invite-below__inner">
+                                <p id="parents-blessings" class="invite-below__blessings">With the heavenly blessings of</p>
+                                <div class="invite-below__parents">
+                                    <div class="invite-below__col">
+                                        <h2 class="invite-below__col-label">Groom’s parents</h2>
+                                        <p class="invite-below__name">Mr. N. Sakthivel</p>
+                                        <p class="invite-below__name">Mrs. S. Lalitha, M.Sc., B.Ed.</p>
+                                        <p class="invite-below__place">Vagarayanpalayam, Coimbatore</p>
+                                    </div>
+                                    <div class="invite-below__col">
+                                        <h2 class="invite-below__col-label">Bride’s parents</h2>
+                                        <p class="invite-below__name">Mr. S.K. Devanan</p>
+                                        <p class="invite-below__name">Mrs. D. Amutha</p>
+                                        <p class="invite-below__place">Sulur, Coimbatore</p>
+                                    </div>
+                                </div>
+
+                                <div class="invite-below__rule" aria-hidden="true">
+                                    <span class="invite-below__rule-line"></span>
+                                    <span class="invite-below__rule-diamond"></span>
+                                    <span class="invite-below__rule-line"></span>
+                                </div>
+
+                                <div class="invite-below__countdown">
+                                    <h2 class="invite-below__countdown-heading">Countdown</h2>
+                                    <p class="invite-below__until">Until 12 April 2026</p>
+                                    <div class="invite-below__timer" id="wedding-countdown">
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-days">0</span>
+                                            <span class="invite-below__unit-label">Days</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-hours">0</span>
+                                            <span class="invite-below__unit-label">Hours</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-minutes">0</span>
+                                            <span class="invite-below__unit-label">Minutes</span>
+                                        </div>
+                                        <span class="invite-below__sep" aria-hidden="true">·</span>
+                                        <div class="invite-below__unit">
+                                            <span class="invite-below__num" id="cd-seconds">0</span>
+                                            <span class="invite-below__unit-label">Seconds</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wedding-poster-block js-reveal" aria-labelledby="wedding-poster-heading">
+                            <div class="wedding-poster-block__intro">
+                                <h2 class="wedding-poster-block__eyebrow" id="wedding-poster-heading">Save the date</h2>
+                                <p class="wedding-poster-block__tagline">When two hearts become one… magic happens.</p>
+                                <p class="wedding-poster-block__meta">
+                                    <span class="wedding-poster-block__names">Aravindhan <span aria-hidden="true">&amp;</span> Nimisha</span>
+                                    <span class="wedding-poster-block__dot" aria-hidden="true">·</span>
+                                    <span class="wedding-poster-block__when">Sunday, 12 April 2026 · 6 AM</span>
+                                    <span class="wedding-poster-block__dot" aria-hidden="true">·</span>
+                                    <span class="wedding-poster-block__where">Rengaz Mahal, Karumathampatti, Coimbatore</span>
+                                </p>
+                            </div>
+                            <figure class="wedding-poster-block__figure">
+                                <img
+                                    class="wedding-poster-block__img"
+                                    src="img/wedding-save-the-date.png"
+                                    width="726"
+                                    height="1024"
+                                    loading="lazy"
+                                    decoding="async"
+                                    alt="Illustrated save the date for Aravindhan and Nimisha — Sunday 12 April 2026, wedding at Rengaz Mahal, Karumathampatti, Coimbatore." />
+                            </figure>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="feast" class="section section--theater-below wedding-feast js-reveal" aria-labelledby="feast-heading">
+                    <div class="section__inner wedding-feast__inner">
+                        <h2 id="feast-heading" class="wedding-feast__title">Wedding feast</h2>
+                        <div class="wedding-feast__ornament" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 10" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round">
+                                <path d="M0 5h48M72 5h48" opacity="0.85" />
+                                <path d="M52 5h16" opacity="0.35" />
+                                <circle cx="60" cy="5" r="2.25" fill="currentColor" stroke="none" opacity="0.9" />
+                            </svg>
+                        </div>
+                        <p class="wedding-feast__accent">For our guests</p>
+                        <p class="wedding-feast__kicker">Chettinad tradition, heartfelt hosting</p>
+                        <p class="wedding-feast__lead">
+                            We’re honoured to welcome you into a day shaped by our families and our roots. Your presence is the
+                            greatest gift — and we can’t wait to celebrate alongside you.
+                        </p>
+                        <p class="wedding-feast__text">
+                            From the ceremony to every moment we share, we’ve planned this celebration with care so you can feel
+                            at ease, connect with loved ones, and take in the joy of the occasion.
+                        </p>
+                        <p class="wedding-feast__note">
+                            If you need any accommodations, please mention them to the hosts through your invitation.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="venue" class="section section--theater-below venue-section js-reveal" aria-labelledby="venue-heading">
+                    <div class="venue-section__shell">
+                        <div class="venue-section__petals" aria-hidden="true"></div>
+                        <div class="venue-section__corners" aria-hidden="true"></div>
+                        <div class="venue-section__inner">
+                            <h2 id="venue-heading" class="venue-section__title">Where we celebrate</h2>
+                            <p class="venue-section__name">Rengaz Mahal</p>
+                            <p class="venue-section__event-label">Reception</p>
+                            <p class="venue-section__when">Saturday, 11 April 2026 · 6:00 PM – 9:00 PM</p>
+                            <p class="venue-section__address">Karumathampatti, Coimbatore</p>
+
+                            <div class="venue-section__map-shell">
+                                <a
+                                    class="venue-section__map-chip"
+                                    href="https://www.google.com/maps/search/?api=1&amp;query=Rengaz%20Mahal%2C%20Karumathampatti%2C%20Coimbatore"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="venue-section__map-chip-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path
+                                            fill="currentColor"
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                                    </svg>
+                                    Open in Maps
+                                </a>
+                                <div class="venue-section__map-frame">
+                                    <!-- Replace src with your “Share → Embed a map” code from Google Maps for a pinned venue -->
+                                    <iframe
+                                        class="venue-section__map"
+                                        title="Rengaz Mahal, Karumathampatti, Coimbatore — reception Saturday 11 April 2026, 6:00 PM to 9:00 PM"
+                                        src="https://www.google.com/maps?q=Rengaz+Mahal,+Karumathampatti,+Coimbatore,+Tamil+Nadu&amp;output=embed"
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                        allowfullscreen=""></iframe>
+                                </div>
+                            </div>
+
+                            <a
+                                class="venue-section__cta"
+                                href="https://www.google.com/maps/dir/?api=1&amp;destination=Rengaz+Mahal,+Karumathampatti,+Coimbatore,+Tamil+Nadu"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                <span class="venue-section__cta-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" focusable="false">
+                                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.75" />
+                                        <path fill="none" stroke="currentColor" stroke-width="1.75" d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                Open in Maps
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="site-footer site-footer--theater">
+                <div class="site-footer__inner">
+                    <p>With love — A&amp;N</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var body = document.body;
+            var splash = document.getElementById("splash");
+            var cta = document.getElementById("splash-cta");
+            var curtainScrollThreshold = 48;
+            var curtainsOpened = false;
+
+            function onScrollCurtains() {
+                if (curtainsOpened) return;
+                if (window.scrollY > curtainScrollThreshold) {
+                    curtainsOpened = true;
+                    body.classList.add("curtain-open");
+                    window.removeEventListener("scroll", onScrollCurtains);
+                }
+            }
+
+            function setupCurtainScroll() {
+                if (body.dataset.curtainScrollBound === "1") return;
+                body.dataset.curtainScrollBound = "1";
+                window.addEventListener("scroll", onScrollCurtains, { passive: true });
+                if (window.scrollY > curtainScrollThreshold) {
+                    curtainsOpened = true;
+                    body.classList.add("curtain-open");
+                }
+            }
+
+            function startTheaterEntrance() {
+                if (!body.classList.contains("theater-entrance")) return;
+                window.setTimeout(function () {
+                    body.classList.remove("theater-entrance");
+                }, 380);
+            }
+
+            function dismiss() {
+                body.classList.add("splash-dismissed");
+                if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                    body.classList.add("theater-entrance");
+                }
+                splash.setAttribute("aria-hidden", "true");
+                setupCurtainScroll();
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(startTheaterEntrance);
+                });
+                var main = document.getElementById("main");
+                if (main) main.focus({ preventScroll: true });
+            }
+
+            if (cta) cta.addEventListener("click", dismiss);
+
+            var skip = document.querySelector(".skip-link");
+            if (skip) {
+                skip.addEventListener("click", function (e) {
+                    if (!body.classList.contains("splash-dismissed")) {
+                        e.preventDefault();
+                        dismiss();
+                        var t = document.getElementById("main");
+                        if (t) {
+                            t.setAttribute("tabindex", "-1");
+                            t.focus({ preventScroll: false });
+                            if (t.id) location.hash = t.id;
+                        }
+                    }
+                });
+            }
+        })();
+
+        (function () {
+            var daysEl = document.getElementById("cd-days");
+            var hoursEl = document.getElementById("cd-hours");
+            var minutesEl = document.getElementById("cd-minutes");
+            var secondsEl = document.getElementById("cd-seconds");
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+            var target = new Date(2026, 3, 12, 0, 0, 0);
+
+            function tick() {
+                var now = new Date();
+                var ms = target.getTime() - now.getTime();
+                if (ms <= 0) {
+                    daysEl.textContent = "0";
+                    hoursEl.textContent = "0";
+                    minutesEl.textContent = "0";
+                    secondsEl.textContent = "0";
+                    return;
+                }
+                var d = Math.floor(ms / 86400000);
+                var h = Math.floor((ms % 86400000) / 3600000);
+                var m = Math.floor((ms % 3600000) / 60000);
+                var s = Math.floor((ms % 60000) / 1000);
+                daysEl.textContent = String(d);
+                hoursEl.textContent = String(h);
+                minutesEl.textContent = String(m);
+                secondsEl.textContent = String(s);
+            }
+
+            tick();
+            window.setInterval(tick, 1000);
+        })();
+
+        (function () {
+            var els = document.querySelectorAll(".js-reveal");
+            if (!els.length) return;
+
+            function revealAll() {
+                els.forEach(function (el) {
+                    el.classList.add("is-revealed");
+                });
+            }
+
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                revealAll();
+                return;
+            }
+
+            if (!("IntersectionObserver" in window)) {
+                revealAll();
+                return;
+            }
+
+            var io = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add("is-revealed");
+                            io.unobserve(en.target);
+                        }
+                    });
+                },
+                { rootMargin: "0px 0px -6% 0px", threshold: 0.1 }
+            );
+
+            els.forEach(function (el) {
+                io.observe(el);
+            });
+        })();
+    </script>
+</body>
+</html>
